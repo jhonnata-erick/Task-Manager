@@ -15,10 +15,7 @@ export interface WorkspaceStoreInterface {
   boards: board[];
   createBoard: (title: string, collumns: columnsName[]) => void;
   createTask: (args: createTaskArgs) => void;
-  workspaces: {
-    id: string;
-    title: string;
-  }[];
+  workspaces: workspace[];
 }
 export type createTaskArgs = {
   title: string;
@@ -30,7 +27,7 @@ export type createTaskArgs = {
   status: columnsName;
 };
 export interface workspace {
-  id: number;
+  id: string;
   name: string;
   tasks: task[];
   boards: board[];

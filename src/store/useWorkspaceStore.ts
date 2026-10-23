@@ -43,6 +43,16 @@ const useWorkspaceStore = create<WorkspaceStoreInterface>((set, get) => ({
     const boards = get().boards;
     set({ boards: [...boards, board] });
   },
+  createWorkspace: (name: string) => {
+    const workspace = {
+      id: `workspace-${Date.now()}${Math.floor(1000 + Math.random() * 9000)}`,
+      name: name,
+      tasks: [],
+      boards: [],
+    };
+    const workspaces = get().workspaces;
+    set({ workspaces: [...workspaces, workspace] });
+  },
   setAppData: async () => {},
   updateDB: () => {},
 }));
