@@ -1,9 +1,9 @@
 import { RouterProvider } from "react-router/dom";
 import router from "./routes";
-import useTaskMgrStore from "../store/useTaskMgrStore";
+import useConnectionStore from "../store/useConnectionStore";
 import { useEffect } from "react";
 function App() {
-  const initConnectionListener = useTaskMgrStore(
+  const initConnectionListener = useConnectionStore(
     (store) => store.initConnectionListener,
   );
   useEffect(() => {

@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
-interface TaskMgrInterface {
+interface ConnectionStoreInterface {
   online: boolean;
   initConnectionListener: () => () => void;
 }
 
-const useTaskMgrStore = create<TaskMgrInterface>((set) => ({
+const useConnectionStore = create<ConnectionStoreInterface>((set) => ({
   online: navigator.onLine,
   initConnectionListener: () => {
     const handleOnline = () => {
@@ -23,4 +23,4 @@ const useTaskMgrStore = create<TaskMgrInterface>((set) => ({
   },
 }));
 
-export default useTaskMgrStore;
+export default useConnectionStore;

@@ -1,8 +1,8 @@
-import useTaskMgrStore from "../store/useTaskMgrStore";
+import useConnectionStore from "../store/useConnectionStore";
 import { Navigate, Outlet } from "react-router";
 
 function OnlineWrapper() {
-  const isOnline = useTaskMgrStore((store) => store.online);
+  const isOnline = useConnectionStore((store) => store.online);
 
   if (isOnline === false) {
     return <Navigate to={"/offline"} />;

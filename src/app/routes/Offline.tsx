@@ -1,5 +1,5 @@
 import { Navigate } from "react-router";
-import useTaskMgrStore from "../../store/useTaskMgrStore";
+import useTaskMgrStore from "../../store/useConnectionStore";
 
 function Offline() {
   const isOnline = useTaskMgrStore((store) => store.online);
