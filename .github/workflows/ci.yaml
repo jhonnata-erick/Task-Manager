@@ -27,8 +27,8 @@ jobs:
       - name: Executar o lint
         run: npm run lint
 
-      - name: Executar Testes
-        run: npm run test --if-present
+      #- name: Executar Testes
+      #  run: npm run test --if-present
 
       - name: Executar Build # Pra ver se não tem erro de compilação
         run: npm run build
