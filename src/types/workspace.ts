@@ -13,9 +13,10 @@ export interface WorkspaceStoreInterface {
   name: string;
   tasks: task[];
   boards: board[];
+  workspaces: workspace[];
   createBoard: (title: string, collumns: columnsName[]) => void;
   createTask: (args: createTaskArgs) => void;
-  workspaces: workspace[];
+  getDataBase: () => database | null;
 }
 export type createTaskArgs = {
   title: string;
@@ -62,3 +63,5 @@ export interface checkItem {
   checked: boolean;
   priority: number;
 }
+
+export type database = workspace[];
