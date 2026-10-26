@@ -14,9 +14,13 @@ export interface WorkspaceStoreInterface {
   tasks: task[];
   boards: board[];
   workspaces: workspace[];
-  createBoard: (title: string, collumns: columnsName[]) => void;
   createTask: (args: createTaskArgs) => void;
+  createBoard: (title: string, collumns: columnsName[]) => void;
+  createWorkspace: (name: string) => void;
   getDataBase: () => database | null;
+  setWorkspacesList: () => Promise<void>;
+  setWorkspaceData: (id: string) => Promise<void>;
+  updateDB: (id: string) => void;
 }
 export type createTaskArgs = {
   title: string;

@@ -1,8 +1,11 @@
 import { create } from "zustand";
 import type {
+  board,
   createTaskArgs,
+  database,
   WorkspaceStoreInterface,
 } from "../types/workspace";
+import createId from "../utils/idgen";
 
 const useWorkspaceStore = create<WorkspaceStoreInterface>((set, get) => ({
   name: "",
@@ -18,7 +21,7 @@ const useWorkspaceStore = create<WorkspaceStoreInterface>((set, get) => ({
     checklist,
   }: createTaskArgs) => {
     const task = {
-      id: `task-${Date.now()}${Math.floor(1000 + Math.random() * 9000)}`,
+      id: createId("task"),
       title: title,
       status: status,
       boardId: boardId,
@@ -31,8 +34,8 @@ const useWorkspaceStore = create<WorkspaceStoreInterface>((set, get) => ({
     set({ tasks: [...tasks, task] });
   },
   createBoard: (title: string, collumns) => {
-    const board = {
-      id: `board-${Date.now()}${Math.floor(1000 + Math.random() * 9000)}`,
+    const board: board = {
+      id: createId("board"),
       title: title,
       tasks: [],
       columns: collumns.map((name) => ({
@@ -45,7 +48,7 @@ const useWorkspaceStore = create<WorkspaceStoreInterface>((set, get) => ({
   },
   createWorkspace: (name: string) => {
     const workspace = {
-      id: `workspace-${Date.now()}${Math.floor(1000 + Math.random() * 9000)}`,
+      id: createId("workspace"),
       name: name,
       tasks: [],
       boards: [],
@@ -53,8 +56,62 @@ const useWorkspaceStore = create<WorkspaceStoreInterface>((set, get) => ({
     const workspaces = get().workspaces;
     set({ workspaces: [...workspaces, workspace] });
   },
-  setAppData: async () => {},
-  updateDB: () => {},
+  getDataBase: () => {
+    try {
+      const rawData = localStorage.getItem("workspaces") || "[]";
+      const db: database = JSON.parse(rawData);
+      return db;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  },
+  setWorkspacesList: async () => {
+    const db = get().getDataBase();
+    const workspacelist = (db || []).map((ws) => ({
+      id: ws.id,
+      name: ws.name,
+      boards: ws.boards,
+      tasks: ws.tasks,
+    }));
+    set({ workspaces: workspacelist });
+  },
+  setWorkspaceData: async (id: string) => {
+    const workspace = get().workspaces.find((ws) => ws.id === id);
+    if (!workspace) {
+      console.log("We couldn't find this workspace");
+    }
+    set({
+      tasks: workspace?.tasks || [],
+      boards: workspace?.boards || [],
+      name: workspace?.name || "Null",
+    });
+  },
+  updateDB: (id: string) => {
+    const db = get().getDataBase() || [];
+
+    const workspace = {
+      id: id,
+      name: get().name,
+      tasks: get().tasks,
+      boards: get().boards,
+    };
+    if (db.length === 0) {
+      const newDB: database = [workspace];
+      localStorage.setItem("workspaces", JSON.stringify(newDB));
+      get().setWorkspacesList();
+      return;
+    }
+    const newDB: database = db.map((ws) => {
+      if (ws.id === id) {
+        return workspace;
+      }
+      return ws;
+    });
+
+    localStorage.setItem("workspaces", JSON.stringify(newDB));
+    get().setWorkspacesList();
+  },
 }));
 
 export default useWorkspaceStore;
