@@ -15,7 +15,7 @@ const useWorkspaceStore = create<WorkspaceStoreInterface>((set, get) => ({
   createTask: ({
     title,
     status,
-    boardId,
+    workspaceId,
     priority,
     description,
     checklist,
@@ -24,7 +24,7 @@ const useWorkspaceStore = create<WorkspaceStoreInterface>((set, get) => ({
       id: createId("task"),
       title: title,
       status: status,
-      boardId: boardId,
+      workspaceId: workspaceId,
       createdAt: new Date(),
       priority: priority,
       description: description || "",
@@ -32,10 +32,12 @@ const useWorkspaceStore = create<WorkspaceStoreInterface>((set, get) => ({
     };
     const tasks = get().tasks;
     set({ tasks: [...tasks, task] });
+    get().updateDB(workspaceId);
   },
-  createBoard: (title: string, collumns) => {
+  createBoard: (title: string, collumns, workspaceId) => {
     const board: board = {
       id: createId("board"),
+      workspaceId: workspaceId,
       title: title,
       tasks: [],
       columns: collumns.map((name) => ({
@@ -45,6 +47,7 @@ const useWorkspaceStore = create<WorkspaceStoreInterface>((set, get) => ({
     };
     const boards = get().boards;
     set({ boards: [...boards, board] });
+    get().updateDB(workspaceId);
   },
   createWorkspace: (name: string) => {
     const workspace = {
@@ -55,6 +58,7 @@ const useWorkspaceStore = create<WorkspaceStoreInterface>((set, get) => ({
     };
     const workspaces = get().workspaces;
     set({ workspaces: [...workspaces, workspace] });
+    get().updateDB(workspace.id);
   },
   getDataBase: () => {
     try {

@@ -15,7 +15,11 @@ export interface WorkspaceStoreInterface {
   boards: board[];
   workspaces: workspace[];
   createTask: (args: createTaskArgs) => void;
-  createBoard: (title: string, collumns: columnsName[]) => void;
+  createBoard: (
+    title: string,
+    collumns: columnsName[],
+    workspaceId: string,
+  ) => void;
   createWorkspace: (name: string) => void;
   getDataBase: () => database | null;
   setWorkspacesList: () => Promise<void>;
@@ -28,7 +32,7 @@ export type createTaskArgs = {
   dueDate?: string;
   checklist?: checkItem[];
   priority: 1 | 2 | 3;
-  boardId: string;
+  workspaceId: string;
   status: columnsName;
 };
 export interface workspace {
@@ -40,6 +44,7 @@ export interface workspace {
 
 export interface board {
   id: string;
+  workspaceId: string;
   title: string;
   tasks: string[];
   columns: column[];
@@ -51,8 +56,8 @@ export interface column {
 export interface task {
   id: string;
   title: string;
-  boardId: string;
   status: columnsName;
+  workspaceId: string;
   dueDate?: Date;
   createdAt: Date;
   updatedAt?: Date;
