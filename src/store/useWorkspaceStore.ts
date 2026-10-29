@@ -8,6 +8,7 @@ import type {
 import createId from "../utils/idgen";
 
 const useWorkspaceStore = create<WorkspaceStoreInterface>((set, get) => ({
+  id: "",
   name: "",
   tasks: [],
   boards: [],
@@ -86,6 +87,7 @@ const useWorkspaceStore = create<WorkspaceStoreInterface>((set, get) => ({
       console.log("We couldn't find this workspace");
     }
     set({
+      id: workspace?.id || "",
       tasks: workspace?.tasks || [],
       boards: workspace?.boards || [],
       name: workspace?.name || "Null",

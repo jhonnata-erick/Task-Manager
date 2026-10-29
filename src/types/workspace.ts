@@ -10,6 +10,7 @@ const statusName = [
 export type columnsName = (typeof statusName)[number];
 
 export interface WorkspaceStoreInterface {
+  id: string;
   name: string;
   tasks: task[];
   boards: board[];
