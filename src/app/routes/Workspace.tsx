@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 function Workspace(): React.ReactNode {
   const { id } = useParams<{ id: string }>();
-  const setAppData = useWorkspaceStore((s) => s.setWorkspaceData);
+  const setAppData = useWorkspaceStore((s) => s.application.setWorkspaceData);
   const name = useWorkspaceStore((s) => s.name);
   useEffect(() => {
     if (id) {

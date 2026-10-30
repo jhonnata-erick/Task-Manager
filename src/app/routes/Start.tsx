@@ -5,7 +5,13 @@ function Start() {
   return (
     <main>
       <h1>Start Page</h1>
-      <button onClick={() => navigate("/createworkspace")}>Get Started</button>
+      <button
+        onClick={() => {
+          navigate("/createworkspace");
+        }}
+      >
+        Get Started
+      </button>
     </main>
   );
 }

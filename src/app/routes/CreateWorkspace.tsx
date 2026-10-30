@@ -1,11 +1,12 @@
 import { useReducer, useState } from "react";
-import Modal from "../../components/ui/Modal";
-import Form from "../../components/ui/form/Form";
-import InputText from "../../components/ui/form/Input";
-import Button from "../../components/ui/form/button";
+import Modal from "../../components/ui/modal/Modal";
+import Form from "../../components/ui/form/form";
+import InputText from "../../components/ui/form/input";
+import Button from "../../components/ui/button/button";
 import type { columnsName } from "../../types/workspace";
-import { useNavigate } from "react-router";
 import useWorkspaceStore from "../../store/useWorkspaceStore";
+import createId from "../../utils/idgen";
+import { useNavigate } from "react-router";
 //import useWorkspaceStore from "../../store/useWorkspaceStore";
 
 const reducer = (step: number, action: "next" | "previous") => {
@@ -33,33 +34,46 @@ function CreateWorkspace() {
       name: "",
     },
   });
-  console.log(formData);
   const [step, setStep] = useReducer(reducer, 1);
-  const navigate = useNavigate();
 
-  const createWorkspace = useWorkspaceStore((state) => state.createWorkspace);
-  const workspaceId = useWorkspaceStore((state) => state.id);
+  const buildWorkspace = useWorkspaceStore((s) => s.application.buildWorkspace);
+  const setWorkspaceData = useWorkspaceStore(
+    (s) => s.application.setWorkspaceData,
+  );
+  const navigate = useNavigate();
   return (
-    <Modal.Container>
-      <Modal.Header title="Create your workspace" />
-      <Modal.Content>
-        <Form
-          onSubmit={(e) => {
-            e.preventDefault();
-            createWorkspace(formData.workspace.name);
-            console.log("submit");
-            navigate(`/workspace/${workspaceId}`);
-          }}
-        >
+    <Modal.Wrapper>
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault();
+          const id = createId("workspace") as `workspace-${number}`;
+          buildWorkspace({
+            id: id,
+            name: formData.workspace.name,
+            type: "workspace",
+            boards: [],
+            tasks: [],
+          });
+          console.log("submit");
+          setWorkspaceData(id);
+          navigate(`/workspace/${id}`);
+        }}
+      >
+        <Modal.Header title="Create your workspace" />
+
+        <Modal.Content>
           {step === 1 && (
             <InputText
+              className=""
+              labelClass=""
+              errorClass=""
               value={formData.workspace.name}
               onChange={(e) => {
                 setFormData({
                   ...formData,
                   workspace: {
                     ...formData.workspace,
-                    name: e.target.value.trim(),
+                    name: e.target.value,
                   },
                 });
               }}
@@ -84,24 +98,23 @@ function CreateWorkspace() {
               label="Board name"
             />
           )}
-          {step === 3 && <div>Finishing step 3</div>}
-        </Form>
-      </Modal.Content>
-      <Modal.Footer>
-        {step > 1 ? (
-          <Button type="default" onClick={() => setStep("previous")}>
-            Back
-          </Button>
-        ) : null}
-        {step < 3 ? (
-          <Button type="next" onClick={() => setStep("next")}>
-            Next
-          </Button>
-        ) : null}
-        {step === 3 ? <Button type="submit">Create</Button> : null}
-      </Modal.Footer>
-    </Modal.Container>
+          {step === 3 && <div>Finishing step 3</div>}{" "}
+        </Modal.Content>
+        <Modal.Footer>
+          {step > 1 ? (
+            <Button type="default" onClick={() => setStep("previous")}>
+              Back
+            </Button>
+          ) : null}
+          {step < 3 ? (
+            <Button type="next" onClick={() => setStep("next")}>
+              Next
+            </Button>
+          ) : null}
+          {step === 3 ? <Button type="submit">Create</Button> : null}
+        </Modal.Footer>
+      </Form>
+    </Modal.Wrapper>
   );
 }
-
 export default CreateWorkspace;
