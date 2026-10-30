@@ -9,24 +9,29 @@ const statusName = [
 
 export type columnsName = (typeof statusName)[number];
 
-export interface WorkspaceStoreInterface {
+export interface WorkspaceStore {
   id: string;
   name: string;
   tasks: task[];
   boards: board[];
-  workspaces: workspace[];
-  createTask: (args: createTaskArgs) => void;
-  createBoard: (
-    title: string,
-    collumns: columnsName[],
-    workspaceId: string,
-  ) => void;
-  createWorkspace: (name: string) => void;
-  getDataBase: () => database | null;
-  setWorkspacesList: () => Promise<void>;
-  setWorkspaceData: (id: string) => Promise<void>;
-  updateDB: (id: string) => void;
+  application: {
+    setWorkspaceData: (id: string) => void;
+    setBoard: (board: board) => void;
+    setTask: (task: task) => void;
+    deleteBoard: (id: `board-${number}`) => void;
+    deleteTask: (id: `task-${number}`) => void;
+  };
+  database: {
+    get: (id: string) => workspace | null;
+    post: (object: task | board | workspace) => void;
+    put: (object: task | board | workspace) => void;
+    del: (
+      id: `task-${number}` | `board-${number}` | `workspace-${number}`,
+      workspaceId?: `workspace-${number}`,
+    ) => void;
+  };
 }
+
 export type createTaskArgs = {
   title: string;
   description?: string;
@@ -37,15 +42,17 @@ export type createTaskArgs = {
   status: columnsName;
 };
 export interface workspace {
-  id: string;
+  id: `workspace-${number}`;
+  type: "workspace";
   name: string;
   tasks: task[];
   boards: board[];
 }
 
 export interface board {
-  id: string;
-  workspaceId: string;
+  id: `board-${number}`;
+  type: "board";
+  workspaceId: `workspace-${number}`;
   title: string;
   tasks: string[];
   columns: column[];
@@ -55,10 +62,11 @@ export interface column {
   tasks: string[];
 }
 export interface task {
-  id: string;
+  id: `task-${number}`;
+  type: "task";
   title: string;
   status: columnsName;
-  workspaceId: string;
+  workspaceId: `workspace-${number}`;
   dueDate?: Date;
   createdAt: Date;
   updatedAt?: Date;
