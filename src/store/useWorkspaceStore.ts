@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { WorkspaceStore } from "../types/workspace";
+import type { workspace, WorkspaceStore } from "../types/workspace";
 import getDBfromLocalStorage from "../utils/getDB";
 
 const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
@@ -8,6 +8,16 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
   tasks: [],
   boards: [],
   application: {
+    buildWorkspace: ({ id, name, tasks, boards }) => {
+      const workspace: workspace = {
+        id: id,
+        type: "workspace",
+        name: name,
+        tasks: tasks,
+        boards: boards,
+      };
+      get().database.post(workspace);
+    },
     setWorkspaceData: (id) => {
       const workspace = get().database.get(id);
       if (workspace) {

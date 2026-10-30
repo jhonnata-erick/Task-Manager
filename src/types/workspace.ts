@@ -15,6 +15,7 @@ export interface WorkspaceStore {
   tasks: task[];
   boards: board[];
   application: {
+    buildWorkspace: ({ id, name, tasks, boards }: workspace) => void;
     setWorkspaceData: (id: string) => void;
     setBoard: (board: board) => void;
     setTask: (task: task) => void;
