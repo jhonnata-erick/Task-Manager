@@ -1,22 +1,43 @@
 import type React from "react";
-import WorkspaceLayout from "../../components/layout/workspace/workspace-layout";
 import { useParams } from "react-router";
-import useWorkspaceStore from "../../store/useWorkspaceStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import WorkspaceBoard from "../../features/workspaces/components/workspace-board";
+import View from "../../features/workspaces/components/workspace-tabs";
 
 function Workspace(): React.ReactNode {
-  const { id } = useParams<{ id: string }>();
-  const setAppData = useWorkspaceStore((s) => s.application.setWorkspaceData);
-  const name = useWorkspaceStore((s) => s.name);
+  const { view } = useParams<{ id: string; view: string }>();
+  const [viewType, setView] = useState<
+    null | "overview" | "list" | "kanban" | "graph"
+  >(null);
+  const [Canvas, setCanvas] = useState(<></>);
   useEffect(() => {
-    if (id) {
-      setAppData(id);
+    switch (view) {
+      case "overview": {
+        setView("overview");
+        setCanvas(<View.Overview />);
+        break;
+      }
+      case "list": {
+        setView("list");
+        setCanvas(<>List</>);
+        break;
+      }
+      case "kanban": {
+        setView("kanban");
+        setCanvas(<>Kanban</>);
+        break;
+      }
+      case "graph": {
+        setView("graph");
+        setCanvas(<>Graph</>);
+        break;
+      }
+      default: {
+        setView(null);
+        break;
+      }
     }
-  }, [setAppData, id]);
-  return (
-    <WorkspaceLayout>
-      <div>{name}</div>
-    </WorkspaceLayout>
-  );
+  }, [view]);
+  return <WorkspaceBoard view={viewType} Board={Canvas} />;
 }
 export default Workspace;
