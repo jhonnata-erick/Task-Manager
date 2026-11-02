@@ -1,4 +1,4 @@
-export function Header({
+export function ModalHeader({
   title,
   canClose,
 }: {

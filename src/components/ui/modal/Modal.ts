@@ -1,13 +1,13 @@
-import { Content } from "./content";
-import { Footer } from "./footer";
-import { Header } from "./header";
-import { Wrapper } from "./wrapper";
+import { ModalContent } from "./content";
+import { ModalFooter } from "./footer";
+import { ModalHeader } from "./header";
+import { ModalWrapper } from "./wrapper";
 
 const Modal = {
-  Wrapper: Wrapper,
-  Header: Header,
-  Content: Content,
-  Footer: Footer,
+  Wrapper: ModalWrapper,
+  Header: ModalHeader,
+  Content: ModalContent,
+  Footer: ModalFooter,
 };
 
 export default Modal;
