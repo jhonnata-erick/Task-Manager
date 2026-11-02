@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+@theme {
+  --color-main: var(--bg-main);
+  --color-secundary: var(--bg-secundary);
+  --color-gray-1: var(--bg-gray-1);
+  --color-gray-2: var(--bg-gray-2);
+  --color-gray-3: var(--bg-gray-3);
+
+  --color-primary: var(--primary-color);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-light: var(--primary-light);
+  --color-primary-darker: var(--primary-darker);
+}
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg-main: white;
+  --bg-secundary: rgb(250, 250, 250);
+  --bg-gray-1: rgb(240, 240, 240);
+  --bg-gray-2: rgb(230, 230, 230);
+  --bg-gray-3: rgb(220, 220, 220);
+
+  --primary-color: rgb(20, 148, 148);
+  --primary-hover: rgb(40, 168, 168);
+  --primary-light: rgb(100, 180, 180);
+  --primary-dark: rgb(0, 128, 128);
+  --primary-darker: rgb(0, 100, 100);
+}
+.dark {
+  --bg-main: rgb(20, 20, 20);
+  --bg-secundary: black;
+
+  --primary-color: rgb(40, 168, 168);
+  --primary-hover: rgb(20, 148, 148);
+}
