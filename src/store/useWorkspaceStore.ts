@@ -6,15 +6,15 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
   id: "",
   name: "",
   tasks: [],
-  boards: [],
+  projects: [],
   application: {
-    buildWorkspace: ({ id, name, tasks, boards }) => {
+    buildWorkspace: ({ id, name, tasks, projects }) => {
       const workspace: workspace = {
         id: id,
         type: "workspace",
         name: name,
         tasks: tasks,
-        boards: boards,
+        projects: projects,
       };
       get().database.post(workspace);
     },
@@ -25,21 +25,23 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
           id: id,
           name: workspace.name,
           tasks: workspace.tasks,
-          boards: workspace.boards,
+          projects: workspace.projects,
         });
       } else {
         throw new Error("This workspace does not exist");
       }
     },
-    setBoard: (board) => {
-      const boards = get().boards;
+    setBoard: (project) => {
+      const projects = get().projects;
       const { post, put } = get().database;
-      if (boards.some((b) => b.id === board.id)) {
-        set({ boards: boards.map((b) => (b.id === board.id ? board : b)) });
-        put(board);
+      if (projects.some((b) => b.id === project.id)) {
+        set({
+          projects: projects.map((b) => (b.id === project.id ? project : b)),
+        });
+        put(project);
       } else {
-        set({ boards: [...boards, board] });
-        post(board);
+        set({ projects: [...projects, project] });
+        post(project);
       }
     },
     setTask: (task) => {
@@ -53,10 +55,10 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
         post(task);
       }
     },
-    deleteBoard: (id) => {
-      const boards = get().boards;
+    deleteProject: (id) => {
+      const boards = get().projects;
       const { del } = get().database;
-      set({ boards: boards.filter((b) => b.id !== id) });
+      set({ projects: boards.filter((b) => b.id !== id) });
       del(id);
     },
     deleteTask: (id) => {
@@ -91,7 +93,7 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
                 }
               : {
                   ...ws,
-                  boards: [...ws.boards, object],
+                  projects: [...ws.projects, object],
                 };
           }
           return ws;
@@ -113,12 +115,12 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
         });
         localStorage.setItem("workspaces", JSON.stringify(newDB));
       }
-      if (object.type === "board") {
+      if (object.type === "project") {
         const newDB = db.map((ws) => {
-          const newBoards = ws.boards.map((board) =>
-            object.id === board.id ? object : board,
+          const newBoards = ws.projects.map((project) =>
+            object.id === project.id ? object : project,
           );
-          return { ...ws, boards: newBoards };
+          return { ...ws, projects: newBoards };
         });
         localStorage.setItem("workspaces", JSON.stringify(newDB));
       }
@@ -136,10 +138,10 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
         });
         localStorage.setItem("workspaces", JSON.stringify(newDB));
       }
-      if (id.includes("board")) {
+      if (id.includes("project")) {
         const newDB = db.map((ws) => {
-          const newBoards = ws.boards.filter((board) => board.id !== id);
-          return { ...ws, boards: newBoards };
+          const newBoards = ws.projects.filter((project) => project.id !== id);
+          return { ...ws, projects: newBoards };
         });
         localStorage.setItem("workspaces", JSON.stringify(newDB));
       }

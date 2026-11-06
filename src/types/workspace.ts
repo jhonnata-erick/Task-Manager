@@ -2,31 +2,31 @@ export interface WorkspaceStore {
   id: string;
   name: string;
   tasks: task[];
-  boards: board[];
+  projects: project[];
   application: {
     buildWorkspace: ({
       id,
       name,
       tasks,
-      boards,
+      projects,
     }: {
       id: `workspace-${number}`;
       name: string;
       tasks: task[];
-      boards: board[];
+      projects: project[];
     }) => void;
     setWorkspaceData: (id: string) => void;
-    setBoard: (board: board) => void;
+    setBoard: (project: project) => void;
     setTask: (task: task) => void;
-    deleteBoard: (id: `board-${number}`) => void;
+    deleteProject: (id: `project-${number}`) => void;
     deleteTask: (id: `task-${number}`) => void;
   };
   database: {
     get: (id: string) => workspace | null;
-    post: (object: task | board | workspace) => void;
-    put: (object: task | board | workspace) => void;
+    post: (object: task | project | workspace) => void;
+    put: (object: task | project | workspace) => void;
     del: (
-      id: `task-${number}` | `board-${number}` | `workspace-${number}`,
+      id: `task-${number}` | `project-${number}` | `workspace-${number}`,
       workspaceId?: `workspace-${number}`,
     ) => void;
   };
@@ -46,20 +46,21 @@ export interface workspace {
   type: "workspace";
   name: string;
   tasks: task[];
-  boards: board[];
+  projects: project[];
 }
 
-export interface board {
-  id: `board-${number}`;
-  type: "board";
+export interface project {
+  id: `project-${number}`;
+  type: "project";
   workspaceId: `workspace-${number}`;
   title: string;
   tasks: string[];
   columns: column[];
 }
 export interface column {
-  name: string;
+  title: string;
   tasks: string[];
+  color: string;
 }
 export interface task {
   id: `task-${number}`;
@@ -67,6 +68,7 @@ export interface task {
   title: string;
   status: string;
   workspaceId: `workspace-${number}`;
+  projectId: `project-${number}`;
   dueDate?: string;
   createdAt: string;
   updatedAt?: string;

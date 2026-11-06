@@ -6,7 +6,7 @@ import View from "../../features/workspaces/components/workspace-tabs";
 import useWorkspaceStore from "../../store/useWorkspaceStore";
 
 function Workspace(): React.ReactNode {
-  const boards = useWorkspaceStore((s) => s.boards);
+  const boards = useWorkspaceStore((s) => s.projects);
   const { view } = useParams<{ id: string; view: string }>();
   const [viewType, setView] = useState<
     null | "overview" | "list" | "kanban" | "graph"
@@ -26,7 +26,7 @@ function Workspace(): React.ReactNode {
       }
       case "kanban": {
         setView("kanban");
-        setCanvas(<View.Kanban board={boards[0]!} />);
+        setCanvas(<View.Kanban project={boards[0]!} />);
         break;
       }
       case "graph": {

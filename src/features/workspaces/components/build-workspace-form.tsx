@@ -2,7 +2,7 @@ import { useState, type SubmitEvent } from "react";
 import Form from "../../../components/ui/form/form";
 import InputText from "../../../components/ui/form/input";
 import Modal from "../../../components/ui/modal/Modal";
-import type { board, task } from "../../../types/workspace";
+import type { project, task } from "../../../types/workspace";
 import useWorkspaceStore from "../../../store/useWorkspaceStore";
 import createId from "../../../utils/idgen";
 import { useNavigate } from "react-router";
@@ -38,22 +38,23 @@ function BuildWorkspaceForm() {
     console.log("handling Submit");
     e.preventDefault();
     const workspaceId = createId("workspace") as `workspace-${number}`;
-    const board: board = {
-      id: createId("board") as `board-${number}`,
-      type: "board",
+    const project: project = {
+      id: createId("project") as `project-${number}`,
+      type: "project",
       workspaceId: workspaceId,
       title: formData.goal.title,
       tasks: [] as string[],
       columns: formData.goal.columns.map((name) => ({
-        name: name,
+        title: name,
         tasks: [] as string[],
+        color: "gray",
       })),
     };
     const workspace = {
       id: workspaceId,
       name: formData.workspace.name,
       tasks: [] as task[],
-      boards: [board] as board[],
+      projects: [project] as project[],
     };
     build(workspace);
     navigate(`/${workspace.id}/overview`);

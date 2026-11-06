@@ -32,8 +32,8 @@ const KanbanBoard = ({ tasks, columns }: KanbanBoardProps) => {
             .filter((t) => t !== undefined);
           return (
             <KanbanColumn
-              key={column.name}
-              columnName={column.name}
+              key={column.title}
+              columnName={column.title}
               tasks={columnTasks}
             />
           );

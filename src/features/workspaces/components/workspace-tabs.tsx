@@ -1,5 +1,5 @@
 import useWorkspaceStore from "../../../store/useWorkspaceStore";
-import type { board } from "../../../types/workspace";
+import type { project } from "../../../types/workspace";
 import KanbanBoard from "../../kanban/KanbanBoard";
 
 function WorkspaceOverview() {
@@ -13,14 +13,14 @@ function WorkspaceOverview() {
 }
 function WorkspaceTaskList() {}
 
-const WorkspaceKanban = ({ board }: { board: board }) => {
+const WorkspaceKanban = ({ project }: { project: project }) => {
   const WorkspaceTaskList = useWorkspaceStore((ws) => ws.tasks);
-  const tasks = board.tasks
+  const tasks = project.tasks
     .map((task) => {
       return WorkspaceTaskList.find((wstl) => wstl.id === task);
     })
     .filter((t) => t !== undefined);
-  return <KanbanBoard tasks={tasks} columns={board.columns} />;
+  return <KanbanBoard tasks={tasks} columns={project.columns} />;
 };
 function WorkspaceGraph() {}
 
