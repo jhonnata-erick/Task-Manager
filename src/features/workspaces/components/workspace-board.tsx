@@ -6,10 +6,10 @@ interface WorkspaceBoardProps {
 }
 function WorkspaceBoard({ Board, view }: WorkspaceBoardProps) {
   return (
-    <section>
+    <div className="flex flex-col h-full">
       <WorkspaceNavigation selected={view} />
       {Board}
-    </section>
+    </div>
   );
 }
 export default WorkspaceBoard;

@@ -1,21 +1,20 @@
-const statusName = [
-  "backlog",
-  "to-do",
-  "doing",
-  "review",
-  "ready",
-  "done",
-] as const;
-
-export type columnsName = (typeof statusName)[number];
-
 export interface WorkspaceStore {
   id: string;
   name: string;
   tasks: task[];
   boards: board[];
   application: {
-    buildWorkspace: ({ id, name, tasks, boards }: workspace) => void;
+    buildWorkspace: ({
+      id,
+      name,
+      tasks,
+      boards,
+    }: {
+      id: `workspace-${number}`;
+      name: string;
+      tasks: task[];
+      boards: board[];
+    }) => void;
     setWorkspaceData: (id: string) => void;
     setBoard: (board: board) => void;
     setTask: (task: task) => void;
@@ -40,7 +39,7 @@ export type createTaskArgs = {
   checklist?: checkItem[];
   priority: 1 | 2 | 3;
   workspaceId: string;
-  status: columnsName;
+  status: string;
 };
 export interface workspace {
   id: `workspace-${number}`;
@@ -59,22 +58,21 @@ export interface board {
   columns: column[];
 }
 export interface column {
-  name: columnsName;
+  name: string;
   tasks: string[];
 }
 export interface task {
   id: `task-${number}`;
   type: "task";
   title: string;
-  status: columnsName;
+  status: string;
   workspaceId: `workspace-${number}`;
-  dueDate?: Date;
-  createdAt: Date;
-  updatedAt?: Date;
-  completedAt?: Date;
-  priority: 1 | 2 | 3;
+  dueDate?: string;
+  createdAt: string;
+  updatedAt?: string;
+  completedAt?: string;
+  priority: "Low" | "Medium" | "High";
   description?: string;
-  checklist?: checkItem[];
 }
 export interface checkItem {
   id: number;

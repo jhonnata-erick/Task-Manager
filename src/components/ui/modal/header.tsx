@@ -1,6 +1,8 @@
+import { X } from "lucide-react";
+
 export function ModalHeader({
   title,
-  canClose,
+  canClose = true,
 }: {
   title: string;
   canClose?: boolean;
@@ -9,7 +11,9 @@ export function ModalHeader({
     <div className="flex items-center justify-between border-b pb-3">
       <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
       {canClose && (
-        <button className="text-gray-400 hover:text-gray-600">x</button>
+        <button className="text-gray-400 hover:text-gray-600">
+          <X />
+        </button>
       )}
     </div>
   );

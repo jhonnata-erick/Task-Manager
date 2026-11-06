@@ -27,6 +27,8 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
           tasks: workspace.tasks,
           boards: workspace.boards,
         });
+      } else {
+        throw new Error("This workspace does not exist");
       }
     },
     setBoard: (board) => {
