@@ -1,32 +1,40 @@
 export interface WorkspaceStore {
   id: string;
-  name: string;
+  title: string;
   tasks: task[];
+  statuses: status[];
   projects: project[];
   application: {
     buildWorkspace: ({
       id,
-      name,
+      title,
       tasks,
+      statuses,
       projects,
     }: {
       id: `workspace-${number}`;
-      name: string;
+      title: string;
       tasks: task[];
+      statuses: status[];
       projects: project[];
     }) => void;
     setWorkspaceData: (id: string) => void;
-    setBoard: (project: project) => void;
+    setProject: (project: project) => void;
     setTask: (task: task) => void;
     deleteProject: (id: `project-${number}`) => void;
+    deleteStatus: (id: `status-${number}`) => void;
     deleteTask: (id: `task-${number}`) => void;
   };
   database: {
     get: (id: string) => workspace | null;
-    post: (object: task | project | workspace) => void;
-    put: (object: task | project | workspace) => void;
+    post: (object: task | status | project | workspace) => void;
+    put: (object: task | status | project | workspace) => void;
     del: (
-      id: `task-${number}` | `project-${number}` | `workspace-${number}`,
+      id:
+        | `task-${number}`
+        | `status-${number}`
+        | `project-${number}`
+        | `workspace-${number}`,
       workspaceId?: `workspace-${number}`,
     ) => void;
   };
@@ -44,8 +52,9 @@ export type createTaskArgs = {
 export interface workspace {
   id: `workspace-${number}`;
   type: "workspace";
-  name: string;
+  title: string;
   tasks: task[];
+  statuses: status[];
   projects: project[];
 }
 
@@ -55,9 +64,13 @@ export interface project {
   workspaceId: `workspace-${number}`;
   title: string;
   tasks: string[];
-  columns: column[];
+  statuses: string[];
 }
-export interface column {
+export interface status {
+  id: `status-${number}`;
+  workspaceId: `workspace-${number}`;
+  projectId: `project-${number}`;
+  type: "status";
   title: string;
   tasks: string[];
   color: string;

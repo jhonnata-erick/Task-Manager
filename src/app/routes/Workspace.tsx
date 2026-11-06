@@ -3,10 +3,9 @@ import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import WorkspaceBoard from "../../features/workspaces/components/workspace-board";
 import View from "../../features/workspaces/components/workspace-tabs";
-import useWorkspaceStore from "../../store/useWorkspaceStore";
+import Kanban from "../../features/kanban/Kanban";
 
 function Workspace(): React.ReactNode {
-  const boards = useWorkspaceStore((s) => s.projects);
   const { view } = useParams<{ id: string; view: string }>();
   const [viewType, setView] = useState<
     null | "overview" | "list" | "kanban" | "graph"
@@ -26,7 +25,7 @@ function Workspace(): React.ReactNode {
       }
       case "kanban": {
         setView("kanban");
-        setCanvas(<View.Kanban project={boards[0]!} />);
+        setCanvas(<Kanban />);
         break;
       }
       case "graph": {

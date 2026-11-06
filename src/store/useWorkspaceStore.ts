@@ -4,16 +4,18 @@ import getDBfromLocalStorage from "../utils/getDB";
 
 const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
   id: "",
-  name: "",
+  title: "",
   tasks: [],
+  statuses: [],
   projects: [],
   application: {
-    buildWorkspace: ({ id, name, tasks, projects }) => {
+    buildWorkspace: ({ id, title, tasks, projects, statuses }) => {
       const workspace: workspace = {
         id: id,
         type: "workspace",
-        name: name,
+        title: title,
         tasks: tasks,
+        statuses: statuses,
         projects: projects,
       };
       get().database.post(workspace);
@@ -23,15 +25,16 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
       if (workspace) {
         set({
           id: id,
-          name: workspace.name,
+          title: workspace.title,
           tasks: workspace.tasks,
+          statuses: workspace.statuses,
           projects: workspace.projects,
         });
       } else {
         throw new Error("This workspace does not exist");
       }
     },
-    setBoard: (project) => {
+    setProject: (project) => {
       const projects = get().projects;
       const { post, put } = get().database;
       if (projects.some((b) => b.id === project.id)) {
@@ -54,6 +57,12 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
         set({ tasks: [...tasks, task] });
         post(task);
       }
+    },
+    deleteStatus: (id) => {
+      const statuses = get().statuses;
+      const { del } = get().database;
+      set({ statuses: statuses.filter((b) => b.id !== id) });
+      del(id);
     },
     deleteProject: (id) => {
       const boards = get().projects;
@@ -86,15 +95,26 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
       if ("workspaceId" in object) {
         const newDB = db.map((ws) => {
           if (ws.id === object.workspaceId) {
-            return object.type === "task"
-              ? {
+            switch (object.type) {
+              case "task": {
+                return {
                   ...ws,
                   tasks: [...ws.tasks, object],
-                }
-              : {
+                };
+              }
+              case "status": {
+                return {
+                  ...ws,
+                  statuses: [...ws.statuses, object],
+                };
+              }
+              case "project": {
+                return {
                   ...ws,
                   projects: [...ws.projects, object],
                 };
+              }
+            }
           }
           return ws;
         });
@@ -106,28 +126,32 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
     },
     put: (object) => {
       const db = getDBfromLocalStorage();
-      if (object.type === "task") {
-        const newDB = db.map((ws) => {
-          const newTasks = ws.tasks.map((task) =>
-            object.id === task.id ? object : task,
-          );
-          return { ...ws, task: newTasks };
-        });
-        localStorage.setItem("workspaces", JSON.stringify(newDB));
-      }
-      if (object.type === "project") {
-        const newDB = db.map((ws) => {
-          const newBoards = ws.projects.map((project) =>
-            object.id === project.id ? object : project,
-          );
-          return { ...ws, projects: newBoards };
-        });
-        localStorage.setItem("workspaces", JSON.stringify(newDB));
-      }
-      if (object.type === "workspace") {
-        const newDB = db.map((ws) => (object.id === ws.id ? object : ws));
-        localStorage.setItem("workspaces", JSON.stringify(newDB));
-      }
+      const newDB = db.map((ws) => {
+        switch (object.type) {
+          case "task": {
+            const newTasks = ws.tasks.map((task) =>
+              object.id === task.id ? object : task,
+            );
+            return { ...ws, tasks: newTasks };
+          }
+          case "status": {
+            const newStatuses = ws.statuses.map((status) =>
+              object.id === status.id ? object : status,
+            );
+            return { ...ws, statuses: newStatuses };
+          }
+          case "project": {
+            const newBoards = ws.projects.map((project) =>
+              object.id === project.id ? object : project,
+            );
+            return { ...ws, projects: newBoards };
+          }
+          case "workspace": {
+            return object.id === ws.id ? object : ws;
+          }
+        }
+      });
+      localStorage.setItem("workspaces", JSON.stringify(newDB));
     },
     del: (id) => {
       const db = getDBfromLocalStorage();
@@ -135,6 +159,13 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
         const newDB = db.map((ws) => {
           const newTasks = ws.tasks.filter((task) => task.id !== id);
           return { ...ws, tasks: newTasks };
+        });
+        localStorage.setItem("workspaces", JSON.stringify(newDB));
+      }
+      if (id.includes("status")) {
+        const newDB = db.map((ws) => {
+          const newStatuses = ws.statuses.filter((status) => status.id !== id);
+          return { ...ws, statuses: newStatuses };
         });
         localStorage.setItem("workspaces", JSON.stringify(newDB));
       }

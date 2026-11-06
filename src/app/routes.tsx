@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Outlet } from "react-router";
 import OnlineWrapper from "./OnlineWrapper";
 import Start from "./routes/Start";
 import Offline from "./routes/Offline";
@@ -14,7 +14,10 @@ const router = createBrowserRouter([
       {
         path: "/:id",
         element: <Application />,
-        children: [{ path: "/:id/:view" }],
+        children: [
+          { path: "/:id/:view", element: <Outlet /> },
+          { path: "/:id/:projectId/:view", element: <Outlet /> },
+        ],
       },
     ],
   },
