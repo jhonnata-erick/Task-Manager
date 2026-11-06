@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import getDBfromLocalStorage from "../../utils/GetDb";
+import getDBfromLocalStorage from "../../utils/GetDatabase";
 import AnchorBtn from "../../components/ui/button/navButton";
 
 export default function Start() {

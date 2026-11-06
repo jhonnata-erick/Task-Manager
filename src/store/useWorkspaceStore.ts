@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import type { Database, Workspace, WorkspaceStore } from "../types/workspace";
-import getDBfromLocalStorage from "../utils/GetDb";
+import getDBfromLocalStorage from "../utils/GetDatabase";
 
 const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
   id: "",
