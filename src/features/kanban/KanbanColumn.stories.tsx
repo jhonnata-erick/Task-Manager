@@ -13,7 +13,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    columnName: "columnName",
     tasks: [
       {
         id: "task-1024",
@@ -21,6 +20,7 @@ export const Default: Story = {
         title: "Finalizar relatório de métricas",
         status: "in_progress",
         workspaceId: "workspace-5",
+        projectId: "project-1",
         dueDate: "2026-11-15T18:00:00.000Z",
         createdAt: "2026-11-04T01:17:00.000Z",
         priority: "High",
@@ -31,6 +31,7 @@ export const Default: Story = {
         id: "task-1025",
         type: "task",
         status: "to-do",
+        projectId: "project-1",
         workspaceId: "workspace-5",
         dueDate: "2026-11-15T18:00:00.000Z",
         createdAt: "2026-11-04T01:17:00.000Z",

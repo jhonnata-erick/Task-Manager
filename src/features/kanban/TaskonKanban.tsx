@@ -1,8 +1,8 @@
 import { Calendar, Flag } from "lucide-react";
-import type { task } from "../../types/workspace";
+import type { Task } from "../../types/workspace";
 
 interface TaskonKanbanProperties {
-  task: task;
+  task: Task;
 }
 
 const TaskonKanban = ({ task }: TaskonKanbanProperties) => {

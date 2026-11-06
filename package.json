@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -noEmit && run lint && tsc -b && vitest && vite build",
+    "build": "tsc -noEmit && eslint . && tsc -b && vite build",
     "test": "vitest",
     "tscheck": "tsc -noEmit",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",

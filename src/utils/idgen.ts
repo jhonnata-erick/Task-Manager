@@ -5,7 +5,7 @@ export default function createId(
   | `status-${number}`
   | `project-${number}`
   | `workspace-${number}` {
-  const crypto = globalThis.crypto || globalThis.Crypto;
+  const crypto = globalThis.crypto;
   const array = new Uint32Array(1);
   crypto.getRandomValues(array);
   const randomNumber = array[0];

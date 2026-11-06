@@ -2,7 +2,7 @@ import { Search } from "lucide-react";
 import useWorkspaceStore from "../../../store/useWorkspaceStore";
 
 export default function Header() {
-  const name = useWorkspaceStore((s) => s.name);
+  const name = useWorkspaceStore((s) => s.title);
   return (
     <header className="p-2">
       <div className="flex justify-between items-center">

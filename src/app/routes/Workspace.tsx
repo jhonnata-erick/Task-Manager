@@ -1,6 +1,5 @@
 import type React from "react";
 import { useParams } from "react-router";
-import { useState } from "react";
 import WorkspaceBoard from "../../features/workspaces/components/WorkspaceBoard";
 import View from "../../features/workspaces/components/WorkspaceTabs";
 import Kanban from "../../features/kanban/Kanban";
@@ -15,27 +14,22 @@ const parseViewParam = (view: string | undefined): views | null => {
 
 function Workspace(): React.ReactNode {
   const { view } = useParams<{ id: string; view: string }>();
-  const [Canvas, setCanvas] = useState(<></>);
   if (parseViewParam(view)) {
     switch (view) {
       case "overview": {
-        setCanvas(<View.Overview />);
-        break;
+        return <WorkspaceBoard Board={<View.Overview />} />;
       }
       case "list": {
-        setCanvas(<>List</>);
-        break;
+        return <WorkspaceBoard Board={<>List</>} />;
       }
       case "kanban": {
-        setCanvas(<Kanban />);
-        break;
+        return <WorkspaceBoard Board={<Kanban />} />;
       }
       case "graph": {
-        setCanvas(<>Graph</>);
-        break;
+        return <WorkspaceBoard Board={<>Graph</>} />;
       }
     }
   }
-  return <WorkspaceBoard Board={Canvas} />;
+  return <></>;
 }
 export default Workspace;

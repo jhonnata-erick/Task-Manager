@@ -10,17 +10,16 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 const workspaceId = "workspace-101";
+const projectId = "project-1";
 export const Default: Story = {
   args: {
-    tasks: [],
-    columns: [],
-
     tasks: [
       {
         id: "task-1",
         type: "task",
         title: "Configurar ambiente de desenvolvimento",
         status: "todo",
+        projectId: projectId,
         workspaceId: workspaceId,
         dueDate: "2026-11-10T18:00:00.000Z",
         createdAt: "2026-11-04T12:00:00.000Z",
@@ -32,6 +31,7 @@ export const Default: Story = {
         id: "task-2",
         type: "task",
         title: "Desenvolver componente de Card do Kanban",
+        projectId: projectId,
         status: "in-progress",
         workspaceId: workspaceId,
         createdAt: "2026-11-04T13:30:00.000Z",
@@ -49,7 +49,8 @@ export const Default: Story = {
         createdAt: "2026-11-02T09:00:00.000Z",
         completedAt: "2026-11-03T17:00:00.000Z",
         priority: "High",
-        description: null,
+        projectId: projectId,
+        description: "",
       },
       {
         id: "task-4",
@@ -58,23 +59,39 @@ export const Default: Story = {
         status: "todo",
         workspaceId: workspaceId,
         createdAt: "2026-11-04T16:00:00.000Z",
+        projectId: projectId,
         priority: "Low",
-        description: null,
+        description: "",
       },
     ],
 
     columns: [
       {
-        name: "A Fazer",
+        id: "status-1",
+        title: "A Fazer",
+        type: "status",
         tasks: ["task-1", "task-4"],
+        projectId: projectId,
+        workspaceId: workspaceId,
+        color: "",
       },
       {
-        name: "Em Progresso",
+        id: "status-2",
+        type: "status",
+        title: "Em Progresso",
+        projectId: projectId,
         tasks: ["task-2"],
+        workspaceId: workspaceId,
+        color: "",
       },
       {
-        name: "Concluído",
+        id: "status-2",
+        type: "status",
+        title: "Concluído",
+        workspaceId: workspaceId,
+        projectId: projectId,
         tasks: ["task-3"],
+        color: "",
       },
     ],
   },

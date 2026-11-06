@@ -1,10 +1,10 @@
 import { Plus } from "lucide-react";
-import type { status, task } from "../../types/workspace";
+import type { Status, Task } from "../../types/workspace";
 import KanbanColumn from "./KanbanColumn";
 
 interface KanbanBoardProperties {
-  tasks: task[];
-  columns: status[];
+  tasks: Task[];
+  columns: Status[];
 }
 
 const KanbanBoard = ({ tasks, columns }: KanbanBoardProperties) => {
