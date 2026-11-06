@@ -1,10 +1,10 @@
 import Header from "../../ui/app/header";
 
-interface ApplicationLayoutProps {
-  children?: React.ReactNode | undefined;
+interface AppLayoutProperties {
+  children?: React.ReactNode;
 }
 
-function AppViewLayout({ children }: ApplicationLayoutProps) {
+function AppViewLayout({ children }: Readonly<AppLayoutProperties>) {
   return (
     <div className="flex flex-col h-screen w-screen box-border">
       <Header />

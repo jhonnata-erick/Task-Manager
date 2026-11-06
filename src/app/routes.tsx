@@ -3,7 +3,7 @@ import OnlineWrapper from "./OnlineWrapper";
 import Start from "./routes/Start";
 import Offline from "./routes/Offline";
 import Application from "./routes/Application";
-import BuildWorkspaceForm from "../features/workspaces/components/build-workspace-form";
+import BuildWorkspaceForm from "../features/workspaces/components/BuildWorkspaceForm";
 
 const router = createBrowserRouter([
   {

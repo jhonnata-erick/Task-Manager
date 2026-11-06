@@ -2,7 +2,7 @@ import { useState, type SubmitEvent } from "react";
 import Form from "../../../components/ui/form/form";
 import InputText from "../../../components/ui/form/input";
 import Modal from "../../../components/ui/modal/Modal";
-import type { project, status, task } from "../../../types/workspace";
+import type { Project, Status, Task } from "../../../types/workspace";
 import useWorkspaceStore from "../../../store/useWorkspaceStore";
 import createId from "../../../utils/idgen";
 import { useNavigate } from "react-router";
@@ -16,7 +16,7 @@ interface FormData {
     newColumn: string;
     columns: string[];
   };
-  tasks: task[];
+  tasks: Task[];
 }
 
 function BuildWorkspaceForm() {
@@ -39,7 +39,7 @@ function BuildWorkspaceForm() {
     e.preventDefault();
     const workspaceId = createId("workspace") as `workspace-${number}`;
     const projectId = createId("project") as `project-${number}`;
-    const statuses: status[] = formData.goal.columns.map((name) => ({
+    const statuses: Status[] = formData.goal.columns.map((name) => ({
       id: createId("status") as `status-${number}`,
       workspaceId: workspaceId,
       projectId: projectId,
@@ -48,7 +48,7 @@ function BuildWorkspaceForm() {
       tasks: [] as string[],
       color: "gray",
     }));
-    const project: project = {
+    const project: Project = {
       id: projectId,
       type: "project",
       workspaceId: workspaceId,
@@ -59,9 +59,9 @@ function BuildWorkspaceForm() {
     const workspace = {
       id: workspaceId,
       title: formData.workspace.name,
-      tasks: [] as task[],
+      tasks: [] as Task[],
       statuses: statuses,
-      projects: [project] as project[],
+      projects: [project] as Project[],
     };
     build(workspace);
     navigate(`/${workspace.id}/overview`);

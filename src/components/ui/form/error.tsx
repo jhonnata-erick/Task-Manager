@@ -1,15 +1,19 @@
-interface ErrorProps extends React.DetailedHTMLProps<
+interface ErrorProperties extends React.DetailedHTMLProps<
   React.LabelHTMLAttributes<HTMLLabelElement>,
   HTMLLabelElement
 > {
-  errorMsg?: string | undefined;
-  className?: string | undefined;
+  errorMsg?: string;
+  className?: string;
 }
 
-export function ErrorMsg({ className, errorMsg, ...props }: ErrorProps) {
+export function ErrorMsg({
+  className,
+  errorMsg,
+  ...properties
+}: Readonly<ErrorProperties>) {
   if (!errorMsg) return null;
   return (
-    <label className={className} {...props}>
+    <label className={className} {...properties}>
       {errorMsg}
     </label>
   );

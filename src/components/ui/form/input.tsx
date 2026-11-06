@@ -1,14 +1,14 @@
-import { FieldWrapper } from "./field-wrapper";
+import { FieldWrapper } from "./FieldWrapper";
 
-interface InputProps extends React.DetailedHTMLProps<
+interface InputProperties extends React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 > {
-  inputClass?: string | undefined;
-  labelClass?: string | undefined;
-  errorClass?: string | undefined;
-  label?: string | undefined;
-  error?: string | undefined;
+  inputClass?: string;
+  labelClass?: string;
+  errorClass?: string;
+  label?: string;
+  error?: string;
 }
 
 function InputText({
@@ -19,8 +19,8 @@ function InputText({
   labelClass,
   label,
   error,
-  ...props
-}: InputProps) {
+  ...properties
+}: Readonly<InputProperties>) {
   return (
     <FieldWrapper
       className={className}
@@ -30,7 +30,7 @@ function InputText({
       label={label}
       error={error}
     >
-      <input id={id} className={inputClass} {...props} />
+      <input id={id} className={inputClass} {...properties} />
     </FieldWrapper>
   );
 }

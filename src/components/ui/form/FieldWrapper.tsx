@@ -1,14 +1,14 @@
 import { ErrorMsg } from "./error";
 import { Label } from "./label";
 
-interface FieldWrapperProps {
-  id?: string | undefined;
-  children?: React.ReactNode | undefined;
-  label?: string | undefined;
-  error?: string | undefined;
-  className?: string | undefined;
-  labelClass?: string | undefined;
-  errorClass?: string | undefined;
+interface FieldWrapperProperties {
+  id?: string;
+  children?: React.ReactNode;
+  label?: string;
+  error?: string;
+  className?: string;
+  labelClass?: string;
+  errorClass?: string;
 }
 export function FieldWrapper({
   id,
@@ -18,7 +18,7 @@ export function FieldWrapper({
   className,
   labelClass,
   errorClass,
-}: FieldWrapperProps) {
+}: Readonly<FieldWrapperProperties>) {
   return (
     <label className={className} htmlFor={id}>
       <Label htmlFor={id} className={labelClass} label={label} />

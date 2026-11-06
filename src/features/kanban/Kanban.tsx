@@ -1,24 +1,21 @@
 import { useParams } from "react-router";
-import View from "../workspaces/components/workspace-tabs";
-import { useEffect, useState } from "react";
-import type { project } from "../../types/workspace";
+import View from "../workspaces/components/WorkspaceTabs";
+import { useEffect } from "react";
 import useWorkspaceStore from "../../store/useWorkspaceStore";
 
-interface KanbanProps {}
-const validateProjectId = (id: string | undefined) => {
+const isIdValid = (id: string | undefined) => {
   const regex = /^project-(\d+)$/;
   return regex.test(id || "");
 };
-const Kanban = ({}: KanbanProps) => {
+const Kanban = () => {
   const { projectId } = useParams<{ projectId: string }>();
-  const [project, setProject] = useState<project | undefined>();
   const projects = useWorkspaceStore((ws) => ws.projects);
+  const project = projects.find((p) => p.id === projectId);
   useEffect(() => {
-    if (projectId && validateProjectId(projectId)) {
-      const project = projects.find((p) => p.id === projectId);
-      setProject(project);
+    if (!(projectId && isIdValid(projectId))) {
+      return;
     }
-  }, [projects]);
+  }, [projectId]);
   return <View.Kanban project={project} />;
 };
 

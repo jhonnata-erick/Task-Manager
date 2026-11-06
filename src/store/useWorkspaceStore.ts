@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import type { workspace, WorkspaceStore } from "../types/workspace";
-import getDBfromLocalStorage from "../utils/getDB";
+import type { Database, Workspace, WorkspaceStore } from "../types/workspace";
+import getDBfromLocalStorage from "../utils/GetDb";
 
 const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
   id: "",
@@ -10,7 +10,7 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
   projects: [],
   application: {
     buildWorkspace: ({ id, title, tasks, projects, statuses }) => {
-      const workspace: workspace = {
+      const workspace: Workspace = {
         id: id,
         type: "workspace",
         title: title,
@@ -82,18 +82,19 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
     get: (id) => {
       if (!id.includes("workspace-")) return null;
       try {
-        const db = getDBfromLocalStorage();
-        const workspace = db.find((ws) => ws.id === id);
+        const database = getDBfromLocalStorage();
+        const workspace = database.find((ws) => ws.id === id);
         return workspace || null;
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log(error);
         return null;
       }
     },
     post: (object) => {
-      const db = getDBfromLocalStorage();
+      const database = getDBfromLocalStorage();
+      let newDatabase: Database;
       if ("workspaceId" in object) {
-        const newDB = db.map((ws) => {
+        newDatabase = database.map((ws) => {
           if (ws.id === object.workspaceId) {
             switch (object.type) {
               case "task": {
@@ -118,15 +119,14 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
           }
           return ws;
         });
-        localStorage.setItem("workspaces", JSON.stringify(newDB));
       } else {
-        const newDB = [...db, object];
-        localStorage.setItem("workspaces", JSON.stringify(newDB));
+        newDatabase = [...database, object];
       }
+      localStorage.setItem("workspaces", JSON.stringify(newDatabase));
     },
     put: (object) => {
-      const db = getDBfromLocalStorage();
-      const newDB = db.map((ws) => {
+      const database = getDBfromLocalStorage();
+      const newDB = database.map((ws) => {
         switch (object.type) {
           case "task": {
             const newTasks = ws.tasks.map((task) =>
@@ -154,32 +154,20 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
       localStorage.setItem("workspaces", JSON.stringify(newDB));
     },
     del: (id) => {
-      const db = getDBfromLocalStorage();
-      if (id.includes("task")) {
-        const newDB = db.map((ws) => {
-          const newTasks = ws.tasks.filter((task) => task.id !== id);
-          return { ...ws, tasks: newTasks };
-        });
+      const database = getDBfromLocalStorage();
+      if (database.some((ws) => ws.id === id)) {
+        const newDB = database.filter((ws) => ws.id !== id);
         localStorage.setItem("workspaces", JSON.stringify(newDB));
       }
-      if (id.includes("status")) {
-        const newDB = db.map((ws) => {
-          const newStatuses = ws.statuses.filter((status) => status.id !== id);
-          return { ...ws, statuses: newStatuses };
-        });
-        localStorage.setItem("workspaces", JSON.stringify(newDB));
-      }
-      if (id.includes("project")) {
-        const newDB = db.map((ws) => {
-          const newBoards = ws.projects.filter((project) => project.id !== id);
-          return { ...ws, projects: newBoards };
-        });
-        localStorage.setItem("workspaces", JSON.stringify(newDB));
-      }
-      if (id.includes("workspace")) {
-        const newDB = db.filter((ws) => ws.id !== id);
-        localStorage.setItem("workspaces", JSON.stringify(newDB));
-      }
+      const newDB = database.map((ws) => {
+        return {
+          ...ws,
+          tasks: ws.tasks.filter((task) => task.id !== id),
+          statuses: ws.statuses.filter((status) => status.id !== id),
+          projects: ws.projects.filter((project) => project.id !== id),
+        };
+      });
+      localStorage.setItem("workspaces", JSON.stringify(newDB));
     },
   },
 }));

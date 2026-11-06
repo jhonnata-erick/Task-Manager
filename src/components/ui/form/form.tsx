@@ -1,8 +1,8 @@
-interface FormProps extends React.DetailedHTMLProps<
+interface FormProperties extends React.DetailedHTMLProps<
   React.FormHTMLAttributes<HTMLFormElement>,
   HTMLFormElement
 > {
-  children?: React.ReactNode | undefined;
+  children?: React.ReactNode;
 }
 
 function Form({
@@ -11,15 +11,15 @@ function Form({
   className,
   key,
   ref,
-  ...props
-}: FormProps) {
+  ...properties
+}: Readonly<FormProperties>) {
   return (
     <form
       className={className}
       onSubmit={onSubmit}
       key={key}
       ref={ref}
-      {...props}
+      {...properties}
     >
       {children}
     </form>

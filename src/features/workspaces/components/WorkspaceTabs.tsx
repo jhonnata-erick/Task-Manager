@@ -1,5 +1,5 @@
 import useWorkspaceStore from "../../../store/useWorkspaceStore";
-import type { project } from "../../../types/workspace";
+import type { Project } from "../../../types/workspace";
 import KanbanBoard from "../../kanban/KanbanBoard";
 
 function WorkspaceOverview() {
@@ -13,7 +13,7 @@ function WorkspaceOverview() {
 }
 function WorkspaceTaskList() {}
 
-const WorkspaceKanban = ({ project }: { project: project | undefined }) => {
+const WorkspaceKanban = ({ project }: { project: Project | undefined }) => {
   const taskList = useWorkspaceStore((ws) => ws.tasks);
   const statusList = useWorkspaceStore((ws) => ws.statuses);
   if (!project) return <KanbanBoard tasks={taskList} columns={statusList} />;

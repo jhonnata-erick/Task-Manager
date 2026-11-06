@@ -56,17 +56,11 @@ export default defineConfig(
       "sonarjs/no-duplicate-string": "warn",
 
       // Customizações de Legibilidade (Unicorn)
+      "unicorn/name-replacements": "off",
       "unicorn/prevent-abbreviations": "warn",
-      "unicorn/filename-case": [
-        "error",
-        {
-          cases: {
-            camelCase: true,
-            pascalCase: true,
-          },
-        },
-      ],
+      "unicorn/filename-case": "off",
       "unicorn/no-null": "off",
+      "unicorn/consistent-boolean-name": "off",
     },
     settings: {
       react: {

@@ -1,9 +1,9 @@
 export interface WorkspaceStore {
   id: string;
   title: string;
-  tasks: task[];
-  statuses: status[];
-  projects: project[];
+  tasks: Task[];
+  statuses: Status[];
+  projects: Project[];
   application: {
     buildWorkspace: ({
       id,
@@ -14,21 +14,21 @@ export interface WorkspaceStore {
     }: {
       id: `workspace-${number}`;
       title: string;
-      tasks: task[];
-      statuses: status[];
-      projects: project[];
+      tasks: Task[];
+      statuses: Status[];
+      projects: Project[];
     }) => void;
     setWorkspaceData: (id: string) => void;
-    setProject: (project: project) => void;
-    setTask: (task: task) => void;
+    setProject: (project: Project) => void;
+    setTask: (task: Task) => void;
     deleteProject: (id: `project-${number}`) => void;
     deleteStatus: (id: `status-${number}`) => void;
     deleteTask: (id: `task-${number}`) => void;
   };
   database: {
-    get: (id: string) => workspace | null;
-    post: (object: task | status | project | workspace) => void;
-    put: (object: task | status | project | workspace) => void;
+    get: (id: string) => Workspace | null;
+    post: (object: Task | Status | Project | Workspace) => void;
+    put: (object: Task | Status | Project | Workspace) => void;
     del: (
       id:
         | `task-${number}`
@@ -40,25 +40,25 @@ export interface WorkspaceStore {
   };
 }
 
-export type createTaskArgs = {
+export type createTaskArguments = {
   title: string;
   description?: string;
   dueDate?: string;
-  checklist?: checkItem[];
+  checklist?: CheckItem[];
   priority: 1 | 2 | 3;
   workspaceId: string;
   status: string;
 };
-export interface workspace {
+export interface Workspace {
   id: `workspace-${number}`;
   type: "workspace";
   title: string;
-  tasks: task[];
-  statuses: status[];
-  projects: project[];
+  tasks: Task[];
+  statuses: Status[];
+  projects: Project[];
 }
 
-export interface project {
+export interface Project {
   id: `project-${number}`;
   type: "project";
   workspaceId: `workspace-${number}`;
@@ -66,7 +66,7 @@ export interface project {
   tasks: string[];
   statuses: string[];
 }
-export interface status {
+export interface Status {
   id: `status-${number}`;
   workspaceId: `workspace-${number}`;
   projectId: `project-${number}`;
@@ -75,7 +75,7 @@ export interface status {
   tasks: string[];
   color: string;
 }
-export interface task {
+export interface Task {
   id: `task-${number}`;
   type: "task";
   title: string;
@@ -89,11 +89,11 @@ export interface task {
   priority: "Low" | "Medium" | "High";
   description?: string;
 }
-export interface checkItem {
+export interface CheckItem {
   id: number;
   name: string;
   checked: boolean;
   priority: number;
 }
 
-export type database = workspace[];
+export type Database = Workspace[];

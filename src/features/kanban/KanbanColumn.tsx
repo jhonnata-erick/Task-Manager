@@ -2,12 +2,12 @@ import { Circle, Plus } from "lucide-react";
 import type { task } from "../../types/workspace";
 import TaskonKanban from "./TaskonKanban";
 
-interface KanbanColumnProps {
+interface KanbanColumnProperties {
   columnName: string;
   tasks: task[];
 }
 
-const KanbanColumn = ({ columnName, tasks }: KanbanColumnProps) => {
+const KanbanColumn = ({ columnName, tasks }: KanbanColumnProperties) => {
   return (
     <div className="shrink-0 p-2 bg-gray-1 rounded-xl w-80 h-fit">
       <div className="grid gap-4">

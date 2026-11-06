@@ -5,5 +5,9 @@ export default function createId(
   | `status-${number}`
   | `project-${number}`
   | `workspace-${number}` {
-  return `${type}-${Date.now() + Math.floor(1000 + Math.random() * 9000)}`;
+  const crypto = globalThis.crypto || globalThis.Crypto;
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  const randomNumber = array[0];
+  return `${type}-${randomNumber}`;
 }

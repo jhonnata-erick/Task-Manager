@@ -1,6 +1,4 @@
-interface CreateProjectFormProps {}
-
-const CreateProjectForm = ({}: CreateProjectFormProps) => {
+export const CreateProjectForm = () => {
   return (
     <div>
       <form>
@@ -11,4 +9,3 @@ const CreateProjectForm = ({}: CreateProjectFormProps) => {
     </div>
   );
 };
-export default CreateProjectForm;

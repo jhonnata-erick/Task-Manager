@@ -1,14 +1,18 @@
-interface LabelProps extends React.DetailedHTMLProps<
+interface LabelProperties extends React.DetailedHTMLProps<
   React.LabelHTMLAttributes<HTMLLabelElement>,
   HTMLLabelElement
 > {
-  className?: string | undefined;
-  label?: string | undefined;
+  className?: string;
+  label?: string;
 }
 
-export function Label({ className, label, ...props }: LabelProps) {
+export function Label({
+  className,
+  label,
+  ...properties
+}: Readonly<LabelProperties>) {
   return (
-    <label className={className} {...props}>
+    <label className={className} {...properties}>
       {label}
     </label>
   );

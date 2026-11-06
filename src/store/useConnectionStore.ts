@@ -1,24 +1,43 @@
 import { create } from "zustand";
 
+type setType = {
+  (
+    partial:
+      | ConnectionStoreInterface
+      | Partial<ConnectionStoreInterface>
+      | ((
+          state: ConnectionStoreInterface,
+        ) => ConnectionStoreInterface | Partial<ConnectionStoreInterface>),
+    replace?: false,
+  ): void;
+  (
+    state:
+      | ConnectionStoreInterface
+      | ((state: ConnectionStoreInterface) => ConnectionStoreInterface),
+    replace: true,
+  ): void;
+};
 interface ConnectionStoreInterface {
   online: boolean;
   initConnectionListener: () => () => void;
 }
+const handleOnline = (set: setType) => () => {
+  set({ online: true });
+};
+const handleOffline = (set: setType) => () => {
+  set({ online: false });
+};
 
 const useConnectionStore = create<ConnectionStoreInterface>((set) => ({
   online: navigator.onLine,
   initConnectionListener: () => {
-    const handleOnline = () => {
-      set({ online: true });
-    };
-    const handleOffline = () => {
-      set({ online: false });
-    };
-    window.addEventListener("online", handleOnline);
-    window.addEventListener("offline", handleOffline);
+    const whenOnline = handleOnline(set);
+    const whenOffline = handleOffline(set);
+    addEventListener("online", whenOnline);
+    addEventListener("offline", whenOffline);
     return () => {
-      window.removeEventListener("online", handleOnline);
-      window.removeEventListener("offline", handleOffline);
+      removeEventListener("online", whenOnline);
+      removeEventListener("offline", whenOffline);
     };
   },
 }));

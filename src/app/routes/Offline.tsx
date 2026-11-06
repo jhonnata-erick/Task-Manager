@@ -1,7 +1,7 @@
 import { Navigate } from "react-router";
 import useTaskMgrStore from "../../store/useConnectionStore";
 
-function Offline() {
+export default function Offline() {
   const isOnline = useTaskMgrStore((store) => store.online);
 
   if (isOnline) {
@@ -17,4 +17,3 @@ function Offline() {
     </main>
   );
 }
-export default Offline;

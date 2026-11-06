@@ -1,7 +1,7 @@
 import { Search } from "lucide-react";
 import useWorkspaceStore from "../../../store/useWorkspaceStore";
 
-function Header() {
+export default function Header() {
   const name = useWorkspaceStore((s) => s.name);
   return (
     <header className="p-2">
@@ -28,4 +28,3 @@ function Header() {
     </header>
   );
 }
-export default Header;

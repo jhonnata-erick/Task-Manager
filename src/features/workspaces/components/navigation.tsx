@@ -1,39 +1,7 @@
 import { ChartNoAxesGantt, Kanban, Library, ListTodo } from "lucide-react";
-import AnchorBtn from "../../../components/ui/button/nav-button";
-import { useEffect, useState } from "react";
+import AnchorBtn from "../../../components/ui/button/navButton";
 
-interface WorkspaceNavigationProps {
-  selected?: "overview" | "list" | "kanban" | "graph" | undefined | null;
-}
-
-function WorkspaceNavigation({ selected }: WorkspaceNavigationProps) {
-  const [selecteds, setSelected] = useState({
-    overview: false,
-    list: false,
-    kanban: false,
-    graph: false,
-  });
-  useEffect(() => {
-    switch (selected) {
-      case "overview": {
-        setSelected({ ...selecteds, [selected]: true });
-        break;
-      }
-      case "list": {
-        setSelected({ ...selecteds, [selected]: true });
-        break;
-      }
-      case "kanban": {
-        setSelected({ ...selecteds, [selected]: true });
-        break;
-      }
-      case "graph": {
-        setSelected({ ...selecteds, [selected]: true });
-        break;
-      }
-    }
-  }, []);
-
+export default function WorkspaceNavigation() {
   return (
     <nav className="bg-main px-2 py-1 border-b-2 border-gray-1 justify-between">
       <ul className="flex gap-2 items-center">
@@ -87,4 +55,3 @@ function WorkspaceNavigation({ selected }: WorkspaceNavigationProps) {
     </nav>
   );
 }
-export default WorkspaceNavigation;

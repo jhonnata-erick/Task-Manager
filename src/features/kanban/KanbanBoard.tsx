@@ -2,12 +2,12 @@ import { Plus } from "lucide-react";
 import type { status, task } from "../../types/workspace";
 import KanbanColumn from "./KanbanColumn";
 
-interface KanbanBoardProps {
+interface KanbanBoardProperties {
   tasks: task[];
   columns: status[];
 }
 
-const KanbanBoard = ({ tasks, columns }: KanbanBoardProps) => {
+const KanbanBoard = ({ tasks, columns }: KanbanBoardProperties) => {
   return (
     <div className="flex flex-col flex-1">
       <div className="flex items-center p-2 justify-between">

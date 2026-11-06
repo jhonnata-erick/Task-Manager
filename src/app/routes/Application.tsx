@@ -1,29 +1,23 @@
 import { useNavigate, useParams } from "react-router";
 import AppViewLayout from "../../components/layout/app/AppViewLayout";
 import useWorkspaceStore from "../../store/useWorkspaceStore";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Workspace from "./Workspace";
 
-function Application() {
+function App() {
   const { id, view } = useParams<{ id: string; view: string }>();
-  const [state, setState] = useState<"idle" | "success" | "loading" | "error">(
-    "idle",
-  );
+
   const navigate = useNavigate();
   const setWorkspace = useWorkspaceStore((s) => s.application.setWorkspaceData);
   useEffect(() => {
-    setState("loading");
-    if (validateWorkspaceId(id)) {
-      setWorkspace(id!);
-      setState("success");
-      if (!view) navigate("overview");
-    } else {
-      setState("error");
+    if (!isWorkspaceIdValid(id)) {
+      return;
     }
-  }, [setWorkspace, id, navigate]);
-  if (state === "error") return <>Error...</>;
-  if (state === "loading") return <>Loading...</>;
-  if (state === "success")
+
+    setWorkspace(id!);
+    if (!view) navigate("overview");
+  }, [setWorkspace, view, navigate, id]);
+  if (isWorkspaceIdValid(id))
     return (
       <AppViewLayout>
         <Workspace />
@@ -31,9 +25,9 @@ function Application() {
     );
   return <>Wait</>;
 }
-function validateWorkspaceId(id: string | undefined) {
+function isWorkspaceIdValid(id: string | undefined) {
   const regex = /^workspace-(\d+)$/;
-  const test = regex.test(id || "");
-  return test;
+  const isTest = regex.test(id || "");
+  return isTest;
 }
-export default Application;
+export default App;

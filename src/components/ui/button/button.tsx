@@ -1,13 +1,17 @@
-interface ButtonProps extends React.DetailedHTMLProps<
+interface ButtonProperties extends React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 > {
-  children?: React.ReactNode | undefined;
+  children?: React.ReactNode;
 }
 
-function Button({ children, className, ...props }: ButtonProps) {
+function Button({
+  children,
+  className,
+  ...properties
+}: Readonly<ButtonProperties>) {
   return (
-    <button className={className} {...props}>
+    <button className={className} {...properties}>
       {children}
     </button>
   );

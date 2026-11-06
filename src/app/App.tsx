@@ -2,7 +2,7 @@ import { RouterProvider } from "react-router/dom";
 import router from "./routes";
 import useConnectionStore from "../store/useConnectionStore";
 import { useEffect } from "react";
-function App() {
+export default function App() {
   const initConnectionListener = useConnectionStore(
     (store) => store.initConnectionListener,
   );
@@ -13,5 +13,3 @@ function App() {
   }, [initConnectionListener]);
   return <RouterProvider router={router} />;
 }
-
-export default App;

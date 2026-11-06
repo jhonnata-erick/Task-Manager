@@ -1,18 +1,18 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import getDBfromLocalStorage from "../../utils/getDB";
-import AnchorBtn from "../../components/ui/button/nav-button";
+import getDBfromLocalStorage from "../../utils/GetDb";
+import AnchorBtn from "../../components/ui/button/navButton";
 
-function Start() {
+export default function Start() {
   const navigate = useNavigate();
   useEffect(() => {
     try {
       const workspaces = getDBfromLocalStorage();
-      workspaces.length > 0 ? navigate(`/${workspaces[0].id}`) : false;
-    } catch (e) {
-      console.log(e);
+      if (workspaces.length > 0) navigate(`/${workspaces[0].id}`);
+    } catch (error) {
+      console.log(error);
     }
-  }, []);
+  }, [navigate]);
   return (
     <main>
       <h1>Start Page</h1>
@@ -20,4 +20,3 @@ function Start() {
     </main>
   );
 }
-export default Start;

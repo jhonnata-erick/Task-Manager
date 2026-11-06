@@ -1,44 +1,41 @@
 import type React from "react";
 import { useParams } from "react-router";
-import { useEffect, useState } from "react";
-import WorkspaceBoard from "../../features/workspaces/components/workspace-board";
-import View from "../../features/workspaces/components/workspace-tabs";
+import { useState } from "react";
+import WorkspaceBoard from "../../features/workspaces/components/WorkspaceBoard";
+import View from "../../features/workspaces/components/WorkspaceTabs";
 import Kanban from "../../features/kanban/Kanban";
+
+type views = "overview" | "list" | "kanban" | "graph";
+
+const parseViewParam = (view: string | undefined): views | null => {
+  if (!view) return null;
+  const validViews = new Set<string>(["overview", "list", "kanban", "graph"]);
+  return validViews.has(view) ? (view as views) : null;
+};
 
 function Workspace(): React.ReactNode {
   const { view } = useParams<{ id: string; view: string }>();
-  const [viewType, setView] = useState<
-    null | "overview" | "list" | "kanban" | "graph"
-  >(null);
   const [Canvas, setCanvas] = useState(<></>);
-  useEffect(() => {
+  if (parseViewParam(view)) {
     switch (view) {
       case "overview": {
-        setView("overview");
         setCanvas(<View.Overview />);
         break;
       }
       case "list": {
-        setView("list");
         setCanvas(<>List</>);
         break;
       }
       case "kanban": {
-        setView("kanban");
         setCanvas(<Kanban />);
         break;
       }
       case "graph": {
-        setView("graph");
         setCanvas(<>Graph</>);
         break;
       }
-      default: {
-        setView(null);
-        break;
-      }
     }
-  }, [view]);
-  return <WorkspaceBoard view={viewType} Board={Canvas} />;
+  }
+  return <WorkspaceBoard Board={Canvas} />;
 }
 export default Workspace;
