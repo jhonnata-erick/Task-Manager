@@ -4,7 +4,13 @@ import useWorkspaceStore from "../../store/useWorkspaceStore";
 import { useEffect } from "react";
 import Workspace from "./Workspace";
 
-function App() {
+const isWorkspaceIdValid = (id: string | undefined) => {
+  const regex = /^workspace-(\d+)$/;
+  const isTest = regex.test(id || "");
+  return isTest;
+};
+
+export default function App() {
   const { id, view } = useParams<{ id: string; view: string }>();
 
   const navigate = useNavigate();
@@ -25,9 +31,3 @@ function App() {
     );
   return <>Wait</>;
 }
-function isWorkspaceIdValid(id: string | undefined) {
-  const regex = /^workspace-(\d+)$/;
-  const isTest = regex.test(id || "");
-  return isTest;
-}
-export default App;
