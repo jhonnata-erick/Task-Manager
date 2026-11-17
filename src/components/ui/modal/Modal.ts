@@ -1,7 +1,7 @@
 import { ModalContent } from "./content";
 import { ModalFooter } from "./footer";
 import { ModalHeader } from "./header";
-import { ModalWrapper } from "./wrapper";
+import { ModalWrapper } from "./ModalWrapper";
 
 const Modal = {
   Wrapper: ModalWrapper,
