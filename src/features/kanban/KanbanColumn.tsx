@@ -9,10 +9,10 @@ interface KanbanColumnProperties {
 
 const KanbanColumn = ({ columnName, tasks }: KanbanColumnProperties) => {
   return (
-    <div className="shrink-0 p-2 bg-gray-1 rounded-xl w-80 h-fit">
+    <div className="shrink-0 p-2 bg-surface-secondary rounded-xl w-80 h-fit">
       <div className="grid gap-4">
         <div className="flex gap-3 items-center">
-          <div className="flex gap-1 px-1 bg-gray-3 items-center rounded-lg">
+          <div className="flex gap-1 px-1 bg-surface-tertiary items-center rounded-lg">
             <Circle size={18} />
             <p>{columnName}</p>
           </div>

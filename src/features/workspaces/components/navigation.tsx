@@ -3,7 +3,7 @@ import AnchorBtn from "../../../components/ui/button/navButton";
 
 export default function WorkspaceNavigation() {
   return (
-    <nav className="bg-main px-2 py-1 border-b-2 border-gray-1 justify-between">
+    <nav className="bg-surface px-2 py-1 border-b-2 border-border justify-between">
       <ul className="flex gap-2 items-center">
         <li>
           <AnchorBtn className="" relative="route" to="overview">

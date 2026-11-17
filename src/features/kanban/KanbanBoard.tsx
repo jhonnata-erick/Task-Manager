@@ -2,6 +2,10 @@ import { Plus } from "lucide-react";
 import type { Status, Task } from "../../types/workspace";
 import KanbanColumn from "./KanbanColumn";
 import { useEffect } from "react";
+import { OverlayTrigger } from "../../components/ui/overlay/OverlayTrigger";
+import { OverlayProvider } from "../../components/ui/overlay/OverlayProvider";
+import OverlayContent from "../../components/ui/overlay/OverlayContent";
+import { CreateTaskForm } from "../tasks/components/CreateTaskForm";
 
 interface KanbanBoardProperties {
   tasks: Task[];
@@ -41,14 +45,19 @@ const KanbanBoard = ({ tasks, columns }: KanbanBoardProperties) => {
       <div className="flex items-center p-2 justify-between">
         <div>BOARD NAME</div>
         <div className="flex gap-2">
-          <button className="px-1 py-0.5 flex items-center gap-0.5 bg-gray-100 rounded-lg border border-gray-300">
+          <button className="px-1 py-0.5 flex items-center gap-0.5 bg-surface-secondary rounded-lg border border-border">
             <p>Add new column</p>
             <Plus size={18} />
           </button>
-          <button className="px-1 py-0.5 flex items-center gap-0.5 bg-teal-400 rounded-lg">
-            <p>Add new task</p>
-            <Plus size={18} />
-          </button>
+          <OverlayProvider closeOn="clickout">
+            <OverlayTrigger className="px-1 py-0.5 flex items-center gap-0.5 bg-primary rounded-lg">
+              <p>Add new task</p>
+              <Plus size={18} />
+            </OverlayTrigger>
+            <OverlayContent id="createTaskForm" darkerBg>
+              <CreateTaskForm />
+            </OverlayContent>
+          </OverlayProvider>
         </div>
       </div>
       <div

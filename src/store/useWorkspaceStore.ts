@@ -8,6 +8,13 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
   tasks: [],
   statuses: [],
   projects: [],
+  priorities: [
+    { title: "None", color: "#9CA3AF" },
+    { title: "Low", color: "#3B82F6" },
+    { title: "Medium", color: "#F59E0B" },
+    { title: "High", color: "#F97316" },
+    { title: "Urgent", color: "#EF4444" },
+  ],
   application: {
     buildWorkspace: ({ id, title, tasks, projects, statuses }) => {
       const workspace: Workspace = {

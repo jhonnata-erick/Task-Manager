@@ -12,7 +12,7 @@ function AnchorButton({
   return (
     <Link
       className={
-        "flex gap-1 items-center py-1 px-1 rounded-lg hover:bg-gray-2" +
+        "flex gap-1 items-center py-1 px-1 rounded-lg hover:bg-surface-tertiary" +
         " " +
         className
       }

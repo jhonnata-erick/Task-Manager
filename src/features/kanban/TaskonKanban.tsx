@@ -7,7 +7,7 @@ interface TaskonKanbanProperties {
 
 const TaskonKanban = ({ task }: TaskonKanbanProperties) => {
   return (
-    <div className="grid gap-2 p-3 bg-main rounded-xl border border-gray-3">
+    <div className="grid gap-2 p-3 bg-surface rounded-xl border border-border">
       <p>{task.title}</p>
       <p>{task.description || ""}</p>
       <div className="flex gap-2 items-center">
