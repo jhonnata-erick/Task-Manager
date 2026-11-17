@@ -49,11 +49,19 @@ export default defineConfig(
     ],
     rules: {
       // Ativa o Prettier como uma regra do ESLint para apontar quebras de estilo
-      "prettier/prettier": "error",
+      "prettier/prettier": [
+        "warn",
+        {
+          endOfLine: "auto",
+        },
+      ],
+      "@typescript-eslint/no-unused-vars": "warn",
 
       // Customizações de Boas Práticas e Legibilidade (SonarJS)
       "sonarjs/cognitive-complexity": ["error", 15],
       "sonarjs/no-duplicate-string": "warn",
+      "sonarjs/no-unused-vars": "off",
+      "sonarjs/no-dead-store": "off",
 
       // Customizações de Legibilidade (Unicorn)
       "unicorn/name-replacements": "off",
@@ -61,6 +69,8 @@ export default defineConfig(
       "unicorn/filename-case": "off",
       "unicorn/no-null": "off",
       "unicorn/consistent-boolean-name": "off",
+
+      "@eslint-react/exhaustive-deps": "warn",
     },
     settings: {
       react: {

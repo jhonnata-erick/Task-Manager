@@ -1,9 +1,19 @@
+const priorityList = ["None", "Low", "Medium", "High", "Urgent"] as const;
+const priorityColors = [
+  "#9CA3AF",
+  "#3B82F6",
+  "#F59E0B",
+  "#F97316",
+  "#EF4444",
+] as const;
+
 export interface WorkspaceStore {
   id: string;
   title: string;
   tasks: Task[];
   statuses: Status[];
   projects: Project[];
+  priorities: Priority[];
   application: {
     buildWorkspace: ({
       id,
@@ -44,8 +54,7 @@ export type createTaskArguments = {
   title: string;
   description?: string;
   dueDate?: string;
-  checklist?: CheckItem[];
-  priority: 1 | 2 | 3;
+  priority: priorities;
   workspaceId: string;
   status: string;
 };
@@ -86,9 +95,17 @@ export interface Task {
   createdAt: string;
   updatedAt?: string;
   completedAt?: string;
-  priority: "Low" | "Medium" | "High";
+  priority: Priority;
   description?: string;
 }
+export type priorities = (typeof priorityList)[number];
+export type priorityColors = (typeof priorityColors)[number];
+
+export interface Priority {
+  title: priorities;
+  color: priorityColors;
+}
+
 export interface CheckItem {
   id: number;
   name: string;
