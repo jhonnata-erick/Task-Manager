@@ -9,7 +9,7 @@ import {
   type RefObject,
 } from "react";
 
-interface OverlayContextProps {
+interface OverlayContextProperties {
   children: ReactNode;
   position?:
     | "centered"
@@ -44,14 +44,14 @@ export const OverlayProvider = ({
   children,
   position = "centered",
   closeOn = "clickout",
-}: OverlayContextProps) => {
+}: OverlayContextProperties) => {
   const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen((prev) => !prev);
+  const toggle = () => setIsOpen((previous) => !previous);
   const close = useCallback(() => setIsOpen(false), []);
 
   useEffect(() => {
-    const handleEscapeKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") close();
     };
     addEventListener("keydown", handleEscapeKey);
     return () => {
@@ -59,10 +59,17 @@ export const OverlayProvider = ({
     };
   }, [close]);
 
-  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const triggerReference = useRef<HTMLButtonElement | null>(null);
   return (
     <OverlayContext
-      value={{ isOpen, position, closeOn, toggle, close, triggerRef }}
+      value={{
+        isOpen,
+        position,
+        closeOn,
+        toggle,
+        close,
+        triggerRef: triggerReference,
+      }}
     >
       {children}
     </OverlayContext>

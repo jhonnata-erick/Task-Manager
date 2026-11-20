@@ -1,4 +1,4 @@
-import { ErrorMsg } from "./error";
+import { ErrorMessage } from "./error";
 import { Label } from "./label";
 
 interface FieldWrapperProperties {
@@ -23,7 +23,7 @@ export function FieldWrapper({
     <label className={className} htmlFor={id}>
       <Label htmlFor={id} className={labelClass} label={label} />
       {children}
-      <ErrorMsg htmlFor={id} className={errorClass} errorMsg={error} />
+      <ErrorMessage htmlFor={id} className={errorClass} errorMessage={error} />
     </label>
   );
 }

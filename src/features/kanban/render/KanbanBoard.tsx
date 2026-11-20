@@ -1,11 +1,11 @@
 import { Plus } from "lucide-react";
-import type { Status, Task } from "../../types/workspace";
+import type { Status, Task } from "../../../types/workspace";
 import KanbanColumn from "./KanbanColumn";
 import { useEffect } from "react";
-import { OverlayTrigger } from "../../components/ui/overlay/OverlayTrigger";
-import { OverlayProvider } from "../../components/ui/overlay/OverlayProvider";
-import OverlayContent from "../../components/ui/overlay/OverlayContent";
-import { CreateTaskForm } from "../tasks/components/CreateTaskForm";
+import { OverlayTrigger } from "../../../components/ui/overlay/OverlayTrigger";
+import { OverlayProvider } from "../../../components/ui/overlay/OverlayProvider";
+import OverlayContent from "../../../components/ui/overlay/OverlayContent";
+import { CreateTaskForm } from "../../tasks/components/CreateTaskForm";
 
 interface KanbanBoardProperties {
   tasks: Task[];
@@ -21,14 +21,15 @@ const KanbanBoard = ({ tasks, columns }: KanbanBoardProperties) => {
       if (!isDown) return;
       isDown = false;
     };
-    const handleClickDown = (e: MouseEvent) => {
-      e.preventDefault();
+    const handleClickDown = (event: MouseEvent) => {
+      event.preventDefault();
       isDown = true;
     };
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouseMove = (event: MouseEvent) => {
       if (!isDown) return;
-      e.preventDefault();
-      const walkLeft = e.movementX < 0 ? Math.abs(e.movementX) : -e.movementX;
+      event.preventDefault();
+      const walkLeft =
+        event.movementX < 0 ? Math.abs(event.movementX) : -event.movementX;
       container.scrollBy({ left: walkLeft });
     };
     container.addEventListener("mousemove", handleMouseMove);
@@ -40,6 +41,7 @@ const KanbanBoard = ({ tasks, columns }: KanbanBoardProperties) => {
       container.removeEventListener("mouseup", handleClickUp);
     };
   }, []);
+
   return (
     <div className="flex flex-col flex-1">
       <div className="flex items-center p-2 justify-between">

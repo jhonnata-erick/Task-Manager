@@ -1,12 +1,12 @@
 import { ChartNoAxesGantt, Kanban, Library, ListTodo } from "lucide-react";
-import AnchorBtn from "../../../components/ui/button/navButton";
+import AnchorButton from "../../../components/ui/button/navButton";
 
 export default function WorkspaceNavigation() {
   return (
     <nav className="bg-surface px-2 py-1 border-b-2 border-border justify-between">
       <ul className="flex gap-2 items-center">
         <li>
-          <AnchorBtn className="" relative="route" to="overview">
+          <AnchorButton className="" relative="path" to="overview">
             <Library
               className="bg-gray-500 rounded-sm p-0.5"
               size={18}
@@ -14,11 +14,11 @@ export default function WorkspaceNavigation() {
               strokeWidth={3}
             />
             <p className="">Overview</p>
-          </AnchorBtn>
+          </AnchorButton>
         </li>
         <div className="">|</div>
         <li>
-          <AnchorBtn to="list">
+          <AnchorButton to="list">
             <ListTodo
               className="bg-green-700 rounded-sm p-0.5 "
               size={18}
@@ -26,10 +26,10 @@ export default function WorkspaceNavigation() {
               strokeWidth={3}
             />
             <p>List</p>
-          </AnchorBtn>
+          </AnchorButton>
         </li>
         <li>
-          <AnchorBtn to="kanban">
+          <AnchorButton to="kanban">
             <Kanban
               className="bg-blue-600 rounded-sm p-0.5 "
               size={18}
@@ -37,10 +37,10 @@ export default function WorkspaceNavigation() {
               strokeWidth={4}
             />
             <p>Kanban</p>
-          </AnchorBtn>
+          </AnchorButton>
         </li>
         <li>
-          <AnchorBtn to="graph">
+          <AnchorButton to="graph">
             <ChartNoAxesGantt
               className="bg-red-500 rounded-sm p-0.5 "
               size={18}
@@ -48,7 +48,7 @@ export default function WorkspaceNavigation() {
               strokeWidth={4}
             />
             <p>Graph</p>
-          </AnchorBtn>
+          </AnchorButton>
         </li>
         <div>|</div>
       </ul>

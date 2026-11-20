@@ -34,9 +34,9 @@ function BuildWorkspaceForm() {
   const build = useWorkspaceStore((s) => s.application.buildWorkspace);
   const navigate = useNavigate();
 
-  function handleSubmit(e: SubmitEvent) {
+  function handleSubmit(event: SubmitEvent) {
     console.log("handling Submit");
-    e.preventDefault();
+    event.preventDefault();
     const workspaceId = createId("workspace") as `workspace-${number}`;
     const projectId = createId("project") as `project-${number}`;
     const statuses: Status[] = formData.goal.columns.map((name) => ({
@@ -68,7 +68,7 @@ function BuildWorkspaceForm() {
   }
   return (
     <Modal.Wrapper>
-      <Form onSubmit={(e) => handleSubmit(e)}>
+      <Form onSubmit={(event) => handleSubmit(event)}>
         <Modal.Header title="Build you Workspace" />
         <Modal.Content>
           <InputText
@@ -77,10 +77,10 @@ function BuildWorkspaceForm() {
             id="workspace-name"
             label="Your workspace name"
             placeholder="Workspace Name"
-            onChange={(e) =>
+            onChange={(event) =>
               setFormData({
                 ...formData,
-                workspace: { ...formData.workspace, name: e.target.value },
+                workspace: { ...formData.workspace, name: event.target.value },
               })
             }
           />
@@ -92,10 +92,10 @@ function BuildWorkspaceForm() {
             id="goal-name"
             label="Tell us your goal or project you will work on"
             placeholder="Project name"
-            onChange={(e) =>
+            onChange={(event) =>
               setFormData({
                 ...formData,
-                goal: { ...formData.goal, title: e.target.value },
+                goal: { ...formData.goal, title: event.target.value },
               })
             }
           />
@@ -105,10 +105,10 @@ function BuildWorkspaceForm() {
             id="status-name"
             label="Name steps to finish your goal"
             placeholder="Columns"
-            onChange={(e) =>
+            onChange={(event) =>
               setFormData({
                 ...formData,
-                goal: { ...formData.goal, newColumn: e.target.value },
+                goal: { ...formData.goal, newColumn: event.target.value },
               })
             }
           />

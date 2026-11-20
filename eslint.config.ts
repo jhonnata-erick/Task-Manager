@@ -71,6 +71,7 @@ export default defineConfig(
       "unicorn/consistent-boolean-name": "off",
 
       "@eslint-react/exhaustive-deps": "warn",
+      "@eslint-react/naming-convention-ref-name": "off",
     },
     settings: {
       react: {

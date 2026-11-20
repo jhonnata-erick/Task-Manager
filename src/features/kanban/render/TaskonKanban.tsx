@@ -1,5 +1,5 @@
 import { Calendar, Flag } from "lucide-react";
-import type { Task } from "../../types/workspace";
+import type { Task } from "../../../types/workspace";
 
 interface TaskonKanbanProperties {
   task: Task;
@@ -16,7 +16,7 @@ const TaskonKanban = ({ task }: TaskonKanbanProperties) => {
       </div>
       <div className="flex gap-2 items-center">
         <Flag size={18} />
-        <p>{task.priority || "-"}</p>
+        <p>{task.priority.title || "-"}</p>
       </div>
     </div>
   );

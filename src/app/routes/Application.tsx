@@ -1,33 +1,26 @@
-import { useNavigate, useParams } from "react-router";
+import { Navigate, Outlet, useParams } from "react-router";
 import AppViewLayout from "../../components/layout/app/AppViewLayout";
-import useWorkspaceStore from "../../store/useWorkspaceStore";
-import { useEffect } from "react";
-import Workspace from "./Workspace";
-
-const isWorkspaceIdValid = (id: string | undefined) => {
-  const regex = /^workspace-(\d+)$/;
-  const isTest = regex.test(id || "");
-  return isTest;
-};
-
+import getDBfromLocalStorage from "../../utils/GetDatabase";
 export default function App() {
-  const { id, view } = useParams<{ id: string; view: string }>();
-
-  const navigate = useNavigate();
-  const setWorkspace = useWorkspaceStore((s) => s.application.setWorkspaceData);
-  useEffect(() => {
-    if (!isWorkspaceIdValid(id)) {
-      return;
-    }
-
-    setWorkspace(id!);
-    if (!view) navigate("overview");
-  }, [setWorkspace, view, navigate, id]);
-  if (isWorkspaceIdValid(id))
-    return (
-      <AppViewLayout>
-        <Workspace />
-      </AppViewLayout>
+  const { workspaceId } = useParams<{
+    workspaceId: string;
+  }>();
+  if (!workspaceId) {
+    const database = getDBfromLocalStorage();
+    return database.length === 0 ? (
+      <Navigate to="/start" />
+    ) : (
+      <Navigate to={`/app/${database[0].id}/board/overview`} relative="route" />
     );
-  return <>Wait</>;
+  }
+
+  console.log("app");
+
+  if (!location.href.split(workspaceId)[1].includes("board"))
+    return <Navigate to={`${workspaceId}/board/overview`} />;
+  return (
+    <AppViewLayout>
+      <Outlet />
+    </AppViewLayout>
+  );
 }

@@ -4,21 +4,45 @@ import Start from "./routes/Start";
 import Offline from "./routes/Offline";
 import Application from "./routes/Application";
 import BuildWorkspaceForm from "../features/workspaces/components/BuildWorkspaceForm";
-
+import { Workspace } from "./routes/Workspace";
+import { Board } from "./routes/Board";
+import { TabManager } from "../features/workspaces/components/TabManager";
 const router = createBrowserRouter([
   {
     element: <OnlineWrapper />,
     children: [
-      { path: "/", element: <Start /> },
+      { path: "/start", element: <Start /> },
       { path: "/createworkspace", element: <BuildWorkspaceForm /> },
       {
-        path: "/:id",
+        path: "app",
         element: <Application />,
         children: [
-          { path: "/:id/:view", element: <Outlet /> },
-          { path: "/:id/:projectId/:view", element: <Outlet /> },
+          {
+            path: ":workspaceId",
+            element: <Workspace />,
+            children: [
+              {
+                path: "board",
+                element: <Board />,
+                children: [
+                  {
+                    path: ":tab",
+                    element: <TabManager />,
+                    children: [
+                      {
+                        path: ":projectId",
+                        element: <Outlet />,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
         ],
       },
+      { path: "*", element: <>Not exists</> },
+      { path: "/notFound", element: <>Not exists</> },
     ],
   },
   { path: "/offline", element: <Offline /> },

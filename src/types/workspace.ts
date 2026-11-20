@@ -1,5 +1,11 @@
-const priorityList = ["None", "Low", "Medium", "High", "Urgent"] as const;
-const priorityColors = [
+export const priorityList = [
+  "None",
+  "Low",
+  "Medium",
+  "High",
+  "Urgent",
+] as const;
+export const priorityColors = [
   "#9CA3AF",
   "#3B82F6",
   "#F59E0B",
@@ -31,6 +37,7 @@ export interface WorkspaceStore {
     setWorkspaceData: (id: string) => void;
     setProject: (project: Project) => void;
     setTask: (task: Task) => void;
+    setStatuses: (status: Status) => void;
     deleteProject: (id: `project-${number}`) => void;
     deleteStatus: (id: `status-${number}`) => void;
     deleteTask: (id: `task-${number}`) => void;
@@ -114,3 +121,5 @@ export interface CheckItem {
 }
 
 export type Database = Workspace[];
+
+export type views = "overview" | "list" | "kanban" | "graph";

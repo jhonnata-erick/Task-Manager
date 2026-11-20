@@ -28,6 +28,7 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
       get().database.post(workspace);
     },
     setWorkspaceData: (id) => {
+      console.log(id);
       const workspace = get().database.get(id);
       if (workspace) {
         set({
@@ -65,6 +66,19 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
         post(task);
       }
     },
+    setStatuses: (status) => {
+      const statuses = get().statuses;
+      const { post, put } = get().database;
+      if (statuses.some((t) => t.id === status.id)) {
+        set({
+          statuses: statuses.map((t) => (t.id === status.id ? status : t)),
+        });
+        put(status);
+      } else {
+        set({ statuses: [...statuses, status] });
+        post(status);
+      }
+    },
     deleteStatus: (id) => {
       const statuses = get().statuses;
       const { del } = get().database;
@@ -99,36 +113,34 @@ const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
     },
     post: (object) => {
       const database = getDBfromLocalStorage();
-      let newDatabase: Database;
-      if ("workspaceId" in object) {
-        newDatabase = database.map((ws) => {
-          if (ws.id === object.workspaceId) {
-            switch (object.type) {
-              case "task": {
-                return {
-                  ...ws,
-                  tasks: [...ws.tasks, object],
-                };
+      const newDatabase: Database =
+        "workspaceId" in object
+          ? database.map((ws) => {
+              if (ws.id === object.workspaceId) {
+                switch (object.type) {
+                  case "task": {
+                    return {
+                      ...ws,
+                      tasks: [...ws.tasks, object],
+                    };
+                  }
+                  case "status": {
+                    return {
+                      ...ws,
+                      statuses: [...ws.statuses, object],
+                    };
+                  }
+                  case "project": {
+                    return {
+                      ...ws,
+                      projects: [...ws.projects, object],
+                    };
+                  }
+                }
               }
-              case "status": {
-                return {
-                  ...ws,
-                  statuses: [...ws.statuses, object],
-                };
-              }
-              case "project": {
-                return {
-                  ...ws,
-                  projects: [...ws.projects, object],
-                };
-              }
-            }
-          }
-          return ws;
-        });
-      } else {
-        newDatabase = [...database, object];
-      }
+              return ws;
+            })
+          : [...database, object];
       localStorage.setItem("workspaces", JSON.stringify(newDatabase));
     },
     put: (object) => {

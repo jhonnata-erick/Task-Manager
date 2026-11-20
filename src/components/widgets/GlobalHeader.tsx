@@ -1,13 +1,15 @@
 import { Search } from "lucide-react";
-import useWorkspaceStore from "../../../store/useWorkspaceStore";
+import useWorkspaceStore from "../../store/useWorkspaceStore";
 
-export default function Header() {
+export default function GlobalHeader() {
   const name = useWorkspaceStore((s) => s.title);
   return (
     <header className="p-2">
       <div className="flex justify-between items-center">
-        <button className="px-1.5 py-1 gap-2 bg-gray-200 flex rounded-lg items-center">
-          <div className="bg-red-400 rounded-lg px-2">J</div>
+        <button className="px-1.5 py-1 gap-2 bg-gray-200 flex rounded-md items-center">
+          <div className="bg-primary-500  text-text-inverse rounded-lg px-2">
+            {name[0]}
+          </div>
           {name}
         </button>
         <div

@@ -203,3 +203,7 @@
   --app-shadow-md: 0 4px 12px rgb(0 0 0 / 25%);
   --app-shadow-lg: 0 10px 30px rgb(0 0 0 / 35%);
 }
+* {
+  font-family: var(--font-sans);
+  font-size: 16px;
+}

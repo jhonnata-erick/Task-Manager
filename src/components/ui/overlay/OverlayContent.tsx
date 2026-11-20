@@ -10,7 +10,7 @@ import {
 import { createPortal } from "react-dom";
 import { useOverlayContext } from "./OverlayProvider";
 
-interface OverlayContentProps extends DetailedHTMLProps<
+interface OverlayContentProperties extends DetailedHTMLProps<
   HTMLAttributes<HTMLDivElement>,
   HTMLDivElement
 > {
@@ -38,8 +38,8 @@ const OverlayContent = ({
   darkerBg = false,
   id,
   preventsClickOutside = false,
-  ...props
-}: OverlayContentProps) => {
+  ...properties
+}: OverlayContentProperties) => {
   const { isOpen, triggerRef, close, position, closeOn } = useOverlayContext();
   const initialStyles: CSSProperties = useMemo(
     () => ({
@@ -110,8 +110,8 @@ const OverlayContent = ({
 
   useEffect(() => {
     handlePosition();
-    const handleClickOut = (e: PointerEvent) => {
-      if (e.target === document.querySelector(`#${id + "-"}clickout-area`))
+    const handleClickOut = (event: PointerEvent) => {
+      if (event.target === document.querySelector(`#${id + "-"}clickout-area`))
         close();
     };
     const handleResize = () => {
@@ -140,7 +140,7 @@ const OverlayContent = ({
       id={`${id + "-"}clickout-area`}
       className={`z-1001 flex flex-1 fixed inset-0 ${darkerBg ? "bg-black/50" : ""} ${preventsClickOutside && closeOn !== "clickout" ? "pointer-events-none" : "pointer-events-auto"}`}
     >
-      <div style={styles} id={id} {...props}>
+      <div style={styles} id={id} {...properties}>
         {children}
       </div>
     </div>,

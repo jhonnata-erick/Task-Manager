@@ -1,5 +1,5 @@
 import { Circle, Plus } from "lucide-react";
-import type { Task } from "../../types/workspace";
+import type { Task } from "../../../types/workspace";
 import TaskonKanban from "./TaskonKanban";
 
 interface KanbanColumnProperties {
