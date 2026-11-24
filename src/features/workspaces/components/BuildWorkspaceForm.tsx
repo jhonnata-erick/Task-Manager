@@ -67,79 +67,78 @@ function BuildWorkspaceForm() {
     navigate(`/${workspace.id}/overview`);
   }
   return (
-    <Modal.Wrapper>
+    <Modal
+      title="Build you Workspace"
+      footer={
+        <button className="border p-1 rounded-md bg-gray-1">Submit</button>
+      }
+    >
       <Form onSubmit={(event) => handleSubmit(event)}>
-        <Modal.Header title="Build you Workspace" />
-        <Modal.Content>
-          <InputText
-            className="flex flex-col gap-1 mb-2"
-            inputClass="border border-gray-3 rounded-md"
-            id="workspace-name"
-            label="Your workspace name"
-            placeholder="Workspace Name"
-            onChange={(event) =>
-              setFormData({
-                ...formData,
-                workspace: { ...formData.workspace, name: event.target.value },
-              })
-            }
-          />
-          <hr />
-          <h2>Set your goal</h2>
-          <InputText
-            className="flex flex-col gap-1"
-            inputClass="border border-gray-3 rounded-md"
-            id="goal-name"
-            label="Tell us your goal or project you will work on"
-            placeholder="Project name"
-            onChange={(event) =>
-              setFormData({
-                ...formData,
-                goal: { ...formData.goal, title: event.target.value },
-              })
-            }
-          />
-          <InputText
-            className="flex flex-col gap-1"
-            inputClass="border border-gray-3 rounded-md"
-            id="status-name"
-            label="Name steps to finish your goal"
-            placeholder="Columns"
-            onChange={(event) =>
-              setFormData({
-                ...formData,
-                goal: { ...formData.goal, newColumn: event.target.value },
-              })
-            }
-          />
-          <button
-            type="button"
-            onClick={() => {
-              setFormData({
-                ...formData,
-                goal: {
-                  ...formData.goal,
-                  newColumn: "",
-                  columns: [...formData.goal.columns, formData.goal.newColumn],
-                },
-              });
-            }}
-          >
-            Adiciona
-          </button>
-          <div>
-            {formData.goal.columns.map((column) => (
-              <div key={column}>
-                <p>{column}</p>
-              </div>
-            ))}
-          </div>
-        </Modal.Content>
-        <Modal.Footer>
-          <button className="border p-1 rounded-md bg-gray-1">Submit</button>
-        </Modal.Footer>
+        <InputText
+          className="flex flex-col gap-1 mb-2"
+          inputClass="border border-gray-3 rounded-md"
+          id="workspace-name"
+          label="Your workspace name"
+          placeholder="Workspace Name"
+          onChange={(event) =>
+            setFormData({
+              ...formData,
+              workspace: { ...formData.workspace, name: event.target.value },
+            })
+          }
+        />
+        <hr />
+        <h2>Set your goal</h2>
+        <InputText
+          className="flex flex-col gap-1"
+          inputClass="border border-gray-3 rounded-md"
+          id="goal-name"
+          label="Tell us your goal or project you will work on"
+          placeholder="Project name"
+          onChange={(event) =>
+            setFormData({
+              ...formData,
+              goal: { ...formData.goal, title: event.target.value },
+            })
+          }
+        />
+        <InputText
+          className="flex flex-col gap-1"
+          inputClass="border border-gray-3 rounded-md"
+          id="status-name"
+          label="Name steps to finish your goal"
+          placeholder="Columns"
+          onChange={(event) =>
+            setFormData({
+              ...formData,
+              goal: { ...formData.goal, newColumn: event.target.value },
+            })
+          }
+        />
+        <button
+          type="button"
+          onClick={() => {
+            setFormData({
+              ...formData,
+              goal: {
+                ...formData.goal,
+                newColumn: "",
+                columns: [...formData.goal.columns, formData.goal.newColumn],
+              },
+            });
+          }}
+        >
+          Adiciona
+        </button>
+        <div>
+          {formData.goal.columns.map((column) => (
+            <div key={column}>
+              <p>{column}</p>
+            </div>
+          ))}
+        </div>
       </Form>
-    </Modal.Wrapper>
+    </Modal>
   );
 }
 

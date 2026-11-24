@@ -94,9 +94,9 @@
   --app-primary-800: #115e59;
   --app-primary-900: #134e4a;
 
-  --app-primary: var(--app-primary-600);
-  --app-primary-hover: var(--app-primary-700);
-  --app-primary-active: var(--app-primary-800);
+  --app-primary: var(--app-primary-500);
+  --app-primary-hover: var(--app-primary-600);
+  --app-primary-active: var(--app-primary-700);
   --app-primary-subtle: var(--app-primary-50);
   --app-primary-border: var(--app-primary-200);
 
@@ -203,7 +203,8 @@
   --app-shadow-md: 0 4px 12px rgb(0 0 0 / 25%);
   --app-shadow-lg: 0 10px 30px rgb(0 0 0 / 35%);
 }
-* {
+body {
   font-family: var(--font-sans);
   font-size: 16px;
+  color: var(--color-text-primary);
 }

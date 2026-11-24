@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import "../../app/index.css";
 
 import KanbanColumn from "./KanbanColumn";
 
